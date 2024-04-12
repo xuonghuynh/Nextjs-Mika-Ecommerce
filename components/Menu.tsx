@@ -3,12 +3,10 @@ import React from "react";
 import {
     NavigationMenu,
     NavigationMenuContent,
-    NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { menu } from "@/data/menu";
@@ -56,7 +54,7 @@ const Menu = () => {
                         <NavigationMenuItem key={item.name}>
                             {item.subMenu && item.subMenu.length > 0 ? (
                                 <NavigationMenuTrigger className="submenu-trigger">
-                                    <div className="text-base font-semibold hover:text-orange-600">
+                                    <div className="text-base font-semibold hover:text-amber-900">
                                         {item.name}
                                     </div>
                                 </NavigationMenuTrigger>
@@ -65,7 +63,7 @@ const Menu = () => {
                                     <NavigationMenuLink
                                         className={navigationMenuTriggerStyle()}
                                     >
-                                        <div className="text-base font-semibold hover:text-orange-600">
+                                        <div className="text-base font-semibold hover:text-amber-900">
                                             {item.name}
                                         </div>
                                     </NavigationMenuLink>
@@ -85,7 +83,7 @@ const Menu = () => {
                                                     <NavigationMenuLink
                                                         className={navigationMenuTriggerStyle()}
                                                     >
-                                                        <span className="hover:text-orange-600">{subItem.name}</span>
+                                                        <span className="hover:text-amber-900">{subItem.name}</span>
                                                     </NavigationMenuLink>
                                                 </Link>
                                             ),

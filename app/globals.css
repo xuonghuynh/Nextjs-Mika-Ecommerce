@@ -72,5 +72,9 @@
     }
     body {
       @apply bg-background text-foreground;
+      font-family: var(--font-poppins);
+    }
+    .font-hind {
+      font-family: var(--font-hind);
     }
   }
