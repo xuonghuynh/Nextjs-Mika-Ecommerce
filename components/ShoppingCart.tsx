@@ -22,7 +22,6 @@ const ShoppingCartButton = () => {
     if (!isMounted) return null;
 
     const closeCart = () => {
-        console.log("close cart");
         setIsOpenSheet(false);
     };
 
@@ -30,7 +29,7 @@ const ShoppingCartButton = () => {
         <Sheet open={isOpenSheet} onOpenChange={setIsOpenSheet}>
             <SheetTrigger className="relative hover:bg-transparent hover:text-amber-900">
                 <ShoppingCart className="h-[22px] w-[22px]" />
-                <span className="absolute left-3 top-[-4px] flex h-4 w-4 items-center justify-center rounded-full bg-amber-800 text-xs text-white">
+                <span className="absolute left-3 top-[-4px] flex h-4 w-4 items-center justify-center rounded-full bg-main text-xs text-white">
                     0
                 </span>
             </SheetTrigger>

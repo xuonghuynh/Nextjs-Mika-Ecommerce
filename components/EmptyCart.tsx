@@ -13,7 +13,7 @@ const EmptyCart = ({ closeCart }: EmptyCartProps) => {
   return (
     <div className='flex flex-col items-center gap-4 h-full justify-center'>
       <ShoppingCart className='h-7 w-7 text-black' />
-      <h3 className='text-lg font-semibold text-black'>Your cart is empty</h3>
+      <div className='text-lg font-semibold text-black'>Your cart is empty</div>
       <Button onClick={closeCartTrigger} className='rounded-full bg-[#83543d] text-sm py-4'>Continue shopping</Button> 
     </div>
   )
