@@ -1,4 +1,5 @@
 import Banner from "@/app/(landing)/_components/Banner";
+import BlogAndEvent from "@/app/(landing)/_components/BlogAndEvent";
 import MainFeature from "@/app/(landing)/_components/MainFeature";
 import Navbar from "@/app/(landing)/_components/Navbar";
 import ProductShowcase from "@/app/(landing)/_components/ProductShowcase";
@@ -10,5 +11,6 @@ export default function Home() {
         <Banner />
         <ProductShowcase />
         <MainFeature />
+        <BlogAndEvent />
     </div>;
 }
