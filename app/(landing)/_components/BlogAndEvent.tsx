@@ -15,13 +15,13 @@ type BlogProps = {
 
 const BlogAndEvent = () => {
     return (
-        <div className="container py-20">
+        <div className="container py-20 max-w-[1200px]">
             <h1 className="text-center text-[40px] font-bold font-hind text-[#333]">Blog & events</h1>
             <div className="grid grid-cols-2 mt-10 gap-x-6 gap-y-20">
                 {blogs.map((blog: BlogProps, index) => (
                     <Link href={blog.url} key={index}>
                         <div key={index}>
-                            <div className="relative max-w-[570px]">
+                            <div className="relative">
                                 <div className="absolute top-0 left-0">
                                     <div className="bg-main text-white px-7 h-[33px] flex items-center justify-center rounded-md w-[145px] text-[13px]">{blog.date}</div>
                                     <div className="bg-[#ebebeb] text-zinc-900 px-7 h-[33px] flex items-center justify-center rounded-md w-[145px] text-[13px] mt-2">{blog.author}</div>
