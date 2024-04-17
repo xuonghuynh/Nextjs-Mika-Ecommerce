@@ -1,5 +1,5 @@
 "use client";
-import { productShowcase } from "@/data/product-showcase";
+import { productShowcase } from "@/data/static-data/product-showcase";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
@@ -37,8 +37,8 @@ const animateVariants = (index: number) => ({
     },
     slideDiv: {
         opacity: 1,
-        x: 0
-    }
+        x: 0,
+    },
 });
 
 const ProductShowcase = () => {
@@ -81,12 +81,16 @@ const ProductShowcase = () => {
                                     : "justify-end",
                             )}
                             variants={animateVariants(index)}
-                            initial={index % 2 === 0 ? "initialForLeft" : "initialForRight"}
+                            initial={
+                                index % 2 === 0
+                                    ? "initialForLeft"
+                                    : "initialForRight"
+                            }
                             whileInView={"slideDiv"}
                             viewport={{ once: true }}
                         >
                             <div className="flex max-w-[350px] flex-col gap-y-3">
-                                <div className="text-main font-medium">
+                                <div className="font-medium text-main">
                                     {product.subtitle}
                                 </div>
                                 <div className="font-hind text-[40px] font-bold leading-[48px]">
@@ -96,7 +100,16 @@ const ProductShowcase = () => {
                                     {product.description}
                                 </div>
                                 <Link href={product.url}>
-                                    <Button className="rounded-full px-10 py-6" variant={index % 2 === 0 ? "primaryOrange" : "primary"}>Shop Now</Button>
+                                    <Button
+                                        className="rounded-full px-10 py-6"
+                                        variant={
+                                            index % 2 === 0
+                                                ? "primaryOrange"
+                                                : "primary"
+                                        }
+                                    >
+                                        Shop Now
+                                    </Button>
                                 </Link>
                             </div>
                         </motion.div>

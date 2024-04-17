@@ -9,7 +9,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import { menu } from "@/data/menu";
+import { menu } from "@/data/static-data/menu";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -21,31 +21,32 @@ type MenuProps = {
 };
 
 const Menu = () => {
-    const onNavChange = () =>{
+    const onNavChange = () => {
         setTimeout(() => {
             // Select elements with the state "open"
             const triggers = document.querySelectorAll(
-              '.submenu-trigger[data-state="open"]'
+                '.submenu-trigger[data-state="open"]',
             );
             const dropdowns = document.querySelectorAll(
-              '.nav-viewport[data-state="open"]'
+                '.nav-viewport[data-state="open"]',
             );
-        
+
             // Check if both triggers and dropdowns are present
             if (!triggers.length || !dropdowns.length) return;
-        
+
             // Simplify the calculation by extracting it into a variable
             const { offsetLeft, offsetWidth } = triggers[0] as HTMLElement;
             const menuWidth = dropdowns[0].children[0].clientWidth;
-            const menuLeftPosition = offsetLeft + offsetWidth / 2 - menuWidth / 2;
-        
+            const menuLeftPosition =
+                offsetLeft + offsetWidth / 2 - menuWidth / 2;
+
             // Apply the calculated position
             document.documentElement.style.setProperty(
-              "--menu-left-position",
-              `${menuLeftPosition}px`
+                "--menu-left-position",
+                `${menuLeftPosition}px`,
             );
-          });
-      }
+        });
+    };
     return (
         <div>
             <NavigationMenu onValueChange={onNavChange} className="border-l-0">
@@ -83,7 +84,9 @@ const Menu = () => {
                                                     <NavigationMenuLink
                                                         className={navigationMenuTriggerStyle()}
                                                     >
-                                                        <span className="hover:text-amber-900">{subItem.name}</span>
+                                                        <span className="hover:text-amber-900">
+                                                            {subItem.name}
+                                                        </span>
                                                     </NavigationMenuLink>
                                                 </Link>
                                             ),
