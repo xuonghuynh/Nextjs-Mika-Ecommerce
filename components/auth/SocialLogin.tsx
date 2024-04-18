@@ -1,15 +1,38 @@
-import { Button } from '@/components/ui/button'
-import { FcGoogle } from 'react-icons/fc'
-import React from 'react'
-import { FaFacebook } from 'react-icons/fa'
+"use client";
+import { Button } from "@/components/ui/button";
+import { FcGoogle } from "react-icons/fc";
+import React from "react";
+import { FaGithub } from "react-icons/fa";
+import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const SocialLogin = () => {
-  return (
-    <div className='flex w-full items-center gap-x-2'>
-        <Button variant={'outline'} size={'lg'} className='w-full' onClick={() => {}}><FcGoogle className='h-5 w-5' /></Button>
-        <Button variant={'outline'} size={'lg'} className='w-full' onClick={() => {}}><FaFacebook className='h-5 w-5 text-[#1877F2]' /></Button>
-    </div>
-  )
-}
+    const onClick = (provider: "google" | "github") => {
+      console.log('click')
+        signIn(provider, {
+            callbackUrl: DEFAULT_LOGIN_REDIRECT,
+        });
+    };
+    return (
+        <div className="flex w-full items-center gap-x-2">
+            <Button
+                variant={"outline"}
+                size={"lg"}
+                className="w-full"
+                onClick={() => onClick("google")}
+            >
+                <FcGoogle className="h-5 w-5" />
+            </Button>
+            <Button
+                variant={"outline"}
+                size={"lg"}
+                className="w-full"
+                onClick={() => onClick("github")}
+            >
+                <FaGithub className="h-5 w-5" />
+            </Button>
+        </div>
+    );
+};
 
-export default SocialLogin
+export default SocialLogin;
