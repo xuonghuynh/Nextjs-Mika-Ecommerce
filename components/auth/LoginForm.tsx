@@ -17,8 +17,11 @@ import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
+import { useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
+    const searchParams = useSearchParams();
+    const isUrlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different account" : "";
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -31,8 +34,6 @@ const LoginForm = () => {
     });
 
     function onSubmit(values: z.infer<typeof LoginSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         setSuccess("");
         setError("");
 
@@ -89,7 +90,7 @@ const LoginForm = () => {
                             </FormItem>
                         )}
                     />
-                    <FormError message={error} />
+                    <FormError message={error || isUrlError} />
                     <FormSuccess message={success} />
                     <div className="flex w-full justify-center">
                         <Button
