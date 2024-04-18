@@ -42,13 +42,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
     },
     callbacks: {
-        async signIn({ user }) {
+        async signIn({ user, account }) {
+            // Allow signing in with provider is not credentials. Example: Google or Github
+            if(account?.provider !== "credentials") return true
+            // Prevent signing in with credentials if email is not verified
             if(user.id) {
-                const isExistingUser = await getUserById(user.id);
-                // if (!isExistingUser || !isExistingUser.emailVerified) {
-                //     return false;
-                // }
-                return true
+                const existingUser = await getUserById(user.id);
+                if(!existingUser?.emailVerified) return false
             }
             
             return true;
