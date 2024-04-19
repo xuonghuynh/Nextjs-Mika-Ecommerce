@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useTransition } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,31 +14,28 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CardWarapper from "@/components/auth/CardWrapper";
-import { RegisterSchema } from "@/schemas";
-import { register } from "@/actions/register";
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
+import { ForgotPasswordSchema } from "@/schemas";
+import { resetPassword } from "@/actions/reset-password";
 
-const RegisterForm = () => {
+const ForgotPasswordForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const form = useForm<z.infer<typeof RegisterSchema>>({
-        resolver: zodResolver(RegisterSchema),
+    const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
+        resolver: zodResolver(ForgotPasswordSchema),
         defaultValues: {
-            name: "",
-            email: "",
-            password: "",
+            email: ""
         },
     });
 
-    function onSubmit(values: z.infer<typeof RegisterSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
+    function onSubmit(values: z.infer<typeof ForgotPasswordSchema>) {
         setSuccess("");
         setError("");
-        startTransition(() => {
-            register(values).then((res) => {
+
+        startTransition(() => { 
+            resetPassword(values).then((res) => {
                 if (res.error) {
                     setError(res.error);
                 }
@@ -49,11 +47,10 @@ const RegisterForm = () => {
     }
     return (
         <CardWarapper
-            headerLabel={"Sign Up"}
-            backButtonLabel={"Already an account? "}
-            backButtonLinkLabel={"Sign In"}
+            headerLabel={"Forgot your password? "}
+            backButtonLabel={"Back to  "}
+            backButtonLinkLabel={"Login"}
             backButtonLink="/login"
-            showSocialLogin
         >
             <Form {...form}>
                 <form
@@ -62,42 +59,12 @@ const RegisterForm = () => {
                 >
                     <FormField
                         control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Full Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="shadcn" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
                         name="email"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="shadcn" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="shadcn"
-                                        {...field}
-                                    />
+                                    <Input placeholder="john.doe@example.com" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -111,7 +78,7 @@ const RegisterForm = () => {
                             className="rounded-full px-10 py-6"
                             type="submit"
                         >
-                            Sign Up
+                            Send reset email
                         </Button>
                     </div>
                 </form>
@@ -120,4 +87,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default ForgotPasswordForm;

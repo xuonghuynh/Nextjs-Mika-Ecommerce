@@ -15,6 +15,7 @@ type CardWarapperProps = {
     children: React.ReactNode;
     headerLabel: string;
     backButtonLabel: string;
+    backButtonLinkLabel: string;
     backButtonLink: string;
     showSocialLogin?: boolean;
 };
@@ -23,6 +24,7 @@ const CardWarapper = ({
     children,
     headerLabel,
     backButtonLabel,
+    backButtonLinkLabel,
     backButtonLink,
     showSocialLogin,
 }: CardWarapperProps) => {
@@ -31,11 +33,12 @@ const CardWarapper = ({
             <CardHeader>
                 <CardTitle className="text-center">{headerLabel}</CardTitle>
             </CardHeader>
-            <CardContent>
-                {children}
-            </CardContent>
-            <CardFooter className="flex justify-center flex-col items-center gap-4">
-                <Link href={backButtonLink}>{backButtonLabel}</Link>
+            <CardContent>{children}</CardContent>
+            <CardFooter className="flex flex-col items-center justify-center gap-4 mb-5">
+                <Link className="text-sm mb-4" href={backButtonLink}>
+                    {backButtonLabel}
+                    <span className="underline">{backButtonLinkLabel}</span>
+                </Link>
                 {showSocialLogin && <SocialLogin />}
             </CardFooter>
         </Card>

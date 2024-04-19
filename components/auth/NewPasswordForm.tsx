@@ -16,47 +16,48 @@ import { Input } from "@/components/ui/input";
 import CardWarapper from "@/components/auth/CardWrapper";
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
-import { LoginSchema } from "@/schemas";
-import { login } from "@/actions/login";
+import { NewPasswordSchema } from "@/schemas";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { newPasswordReset } from "@/actions/new-password";
 
-const LoginForm = () => {
+const NewPasswordForm = () => {
     const searchParams = useSearchParams();
-    const isUrlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different account" : "";
+    const token = searchParams.get("token")
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof NewPasswordSchema>>({
+        resolver: zodResolver(NewPasswordSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            password: ""
         },
     });
 
-    function onSubmit(values: z.infer<typeof LoginSchema>) {
+    function onSubmit(values: z.infer<typeof NewPasswordSchema>) {
         setSuccess("");
         setError("");
 
         startTransition(() => { 
-            login(values).then((res) => {
-                if (res.error) {
-                    setError(res.error);
+            if(!token) {
+                setError("Missing token")
+                return
+            }
+            newPasswordReset(values, token).then((res) => {
+                if(res.error) {
+                    setError(res.error)
                 }
-                if (res.success) {
-                    setSuccess(res.success);
+                if(res.success) {
+                    setSuccess(res.success)
                 }
-            });
+            })
         });
     }
     return (
         <CardWarapper
-            headerLabel={"Login"}
-            backButtonLabel={"Don't have an account? "}
-            backButtonLinkLabel={"Sign Up"}
-            backButtonLink="/register"
-            showSocialLogin
+            headerLabel={"Reset your password"}
+            backButtonLabel={"Back to  "}
+            backButtonLinkLabel={"Login"}
+            backButtonLink="/login"
         >
             <Form {...form}>
                 <form
@@ -65,35 +66,18 @@ const LoginForm = () => {
                 >
                     <FormField
                         control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="shadcn" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Password</FormLabel>
+                                <FormLabel>New Password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="shadcn"
-                                        {...field}
-                                    />
+                                    <Input type="password" placeholder="" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <FormError message={error || isUrlError} />
+                    <FormError message={error} />
                     <FormSuccess message={success} />
                     <div className="flex w-full justify-center">
                         <Button
@@ -101,16 +85,13 @@ const LoginForm = () => {
                             className="rounded-full px-10 py-6"
                             type="submit"
                         >
-                            Sign In
+                            Reset Password
                         </Button>
                     </div>
-                    <Button size={"sm"} variant={"link"} className="w-full !mt-5 underline !p-0 " asChild>
-                        <Link className="w-full mt-0 font-normal " href="/forgot-password">Forgot Password?</Link>
-                    </Button>
                 </form>
             </Form>
         </CardWarapper>
     );
 };
 
-export default LoginForm;
+export default NewPasswordForm;
