@@ -1,5 +1,8 @@
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { getServerCurrentUser } from "@/lib/auth";
+import { redirect } from 'next/navigation'
+import { DEFAULT_USER_LOGIN_REDIRECT } from "@/routes";
 
 export const metadata = {
     title: "Next.js",
@@ -12,6 +15,10 @@ export default async function RootLayout({
     children: React.ReactNode;
 }) {
     const session = await auth();
+    const user = await getServerCurrentUser();
+    if(!user || user.role !== "ADMIN") {
+        redirect(DEFAULT_USER_LOGIN_REDIRECT)
+    }
     return (
         <SessionProvider session={session}>
             <html lang="en">

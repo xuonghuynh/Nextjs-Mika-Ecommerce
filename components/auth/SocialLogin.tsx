@@ -4,13 +4,13 @@ import { FcGoogle } from "react-icons/fc";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { DEFAULT_USER_LOGIN_REDIRECT } from "@/routes";
 
 const SocialLogin = () => {
     const onClick = (provider: "google" | "github") => {
       console.log('click')
         signIn(provider, {
-            callbackUrl: DEFAULT_LOGIN_REDIRECT,
+            callbackUrl: DEFAULT_USER_LOGIN_REDIRECT,
         });
     };
     return (
