@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { RegisterSchema } from "@/schemas";
 import * as z from "zod";
 import bcryptjs from "bcryptjs";
@@ -7,36 +7,49 @@ import { db } from "@/lib/db";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail-send-verification";
 
- export const register = async(values: z.infer<typeof RegisterSchema>) => {
+/**
+ * Register new user using validated data
+ * @param {z.infer<typeof RegisterSchema>} values - Validated registration data
+ * @returns {{error?: string, success?: string}} Object containing error or success message
+ */
+export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validatedFields = RegisterSchema.safeParse(values);
 
-    if(!validatedFields.success) {   
-        return { error: 'Invalid fields!' };
+    // If fields are invalid, return error
+    if (!validatedFields.success) {
+        return { error: "Invalid fields!" };
     }
 
     const { email, password, name } = validatedFields.data;
 
+    // Use bcryptjs to hash password
     const hashedPassword = await bcryptjs.hash(password, 10);
 
-    // TODO: Add your own logic here to register the user
+    // Get user by email
+    const isExistingUser = await getUserByEmail(email);
 
-    const isExistingUser = await getUserByEmail(email)
-
-    if(isExistingUser) {
-        return { error: 'Email already exists!' };
+    // If user already exists, return error
+    if (isExistingUser) {
+        return { error: "Email already exists!" };
     }
 
+    // Create user
     await db.user.create({
         data: {
             email,
             password: hashedPassword,
-            name
-        }
-    })
+            name,
+        },
+    });
 
-    const verificationToken = await generateVerificationToken(email)
-    // TODO: Send verification email
-    await sendVerificationEmail(verificationToken.email, verificationToken.token)
-    
-    return { success: 'Confirmation email sent!' };
- }
+    // Generate verification token
+    const verificationToken = await generateVerificationToken(email);
+    // Send verification email
+    await sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token,
+    );
+
+    // Return success message
+    return { success: "Confirmation email sent!" };
+};
