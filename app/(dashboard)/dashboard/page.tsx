@@ -5,11 +5,8 @@ import React from "react";
 
 const DashboardPage = () => {
     const session = useCurrentUser();
-    const onClick = () => {
-        signOut()
-    }
     return (
-        <div>
+        <div className="p-6">
             {JSON.stringify(session)}
             <button onClick={() => signOut()} >Sign out</button>
         </div>
