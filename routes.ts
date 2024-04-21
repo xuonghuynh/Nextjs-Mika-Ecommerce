@@ -6,6 +6,7 @@ export const publicRoutes = [
     "/",
     "/about",
     "/verify-email",
+    "/api/uploadthing"
 ]
 
 /**

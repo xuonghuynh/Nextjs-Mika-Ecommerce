@@ -26,3 +26,9 @@ export const NewPasswordSchema = z.object({
         .string()
         .min(6, { message: "Password must be at least 6 characters" })
 });
+
+export const NewCollectionSchema = z.object({
+    name: z.string().min(1, { message: "Name is required" }),
+    description: z.string().min(1, { message: "Description is required" }),
+    image: z.string().min(1, { message: "Image is required" }),
+});

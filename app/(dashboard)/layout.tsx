@@ -6,6 +6,7 @@ import { DEFAULT_USER_LOGIN_REDIRECT } from "@/routes";
 import Navbar from "@/app/(dashboard)/_components/Navbar";
 import Sidebar from "@/app/(dashboard)/_components/SideBar";
 import "@/app/globals.css";
+import "@uploadthing/react/styles.css";
 
 export const metadata = {
     title: "Mika Dashboard",

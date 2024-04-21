@@ -14,15 +14,6 @@ const SidebarRouteItem = ({ lable, icon: Icon, href }: SidebarItemProps) => {
     const pathname = usePathname();
     const router = useRouter();
 
-    console.log(pathname, href);
-
-    // const isActive = () => {
-    //     if(href === '/dashboard' && pathname !== href) {
-    //         return false;
-    //     }
-    //     return pathname.startsWith(href);
-    // }
-
     const isActive = href==="/dashboard" && pathname !== href ? false : pathname.startsWith(href);
 
     const onClick = () => {
