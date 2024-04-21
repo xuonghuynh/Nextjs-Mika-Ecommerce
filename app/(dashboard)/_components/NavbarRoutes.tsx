@@ -1,9 +1,7 @@
 "use client";
 import SearchInput from "@/app/(dashboard)/_components/SearchInput";
-import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
+import UserButton from "@/app/(dashboard)/_components/UserButton";
+
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -18,10 +16,9 @@ const NavbarRoutes = () => {
                 </div>
             )}
             <div className="ml-auto flex gap-x-2">
-                <Button onClick={() => signOut()} size="sm" variant="ghost">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Exit
-                </Button>
+                <div className="mr-10">
+                    <UserButton />
+                </div>
             </div>
         </>
     );

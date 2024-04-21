@@ -12,7 +12,7 @@ const routesMenu = [
     },
     {
         lable: "Collection",
-        href: "/dashboard/collection",
+        href: "/dashboard/collections",
         icon: Boxes,
     },
     {
@@ -28,8 +28,6 @@ const routesMenu = [
 ];
 
 const SidebarRoutes = () => {
-    const pathname = usePathname();
-
     return (
         <div className="flex w-full flex-col">
             {routesMenu.map((route) => {
