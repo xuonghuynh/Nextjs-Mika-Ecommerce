@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,10 @@ import { NewCollectionSchema } from "@/schemas";
 import { z } from "zod";
 import { FileUpload } from "@/app/(dashboard)/_components/FileUpload";
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
 
 const NewCollection = () => {
+    const [image, setImage] = useState<string | undefined>("");
     const form = useForm<z.infer<typeof NewCollectionSchema>>({
         resolver: zodResolver(NewCollectionSchema),
         defaultValues: {
@@ -29,6 +31,8 @@ const NewCollection = () => {
 
     const onSubmit = async (values: z.infer<typeof NewCollectionSchema>) => {
         console.log(values);
+        const { image } = form.getValues();
+        console.log(image);
     };
 
     return (
@@ -51,7 +55,7 @@ const NewCollection = () => {
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Collection Name</FormLabel>
+                                    <FormLabel>Name</FormLabel>
                                     <FormControl>
                                         <Input placeholder="" {...field} />
                                     </FormControl>
@@ -66,7 +70,11 @@ const NewCollection = () => {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="" {...field} rows={5} />
+                                        <Textarea
+                                            placeholder=""
+                                            {...field}
+                                            rows={5}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -79,12 +87,20 @@ const NewCollection = () => {
                                 <FormItem>
                                     <FormLabel>Image</FormLabel>
                                     <FormControl>
-                                        <FileUpload
-                                            endpoint="collectionImage"
-                                            onChange={(url) => {
-                                                field.onChange(url);
-                                            }}
-                                        />
+                                        {image ? (
+                                            <div>
+                                                <Image className="object-cover rounded-md" src={image} alt="collection image" width={300} height={300} />
+                                                <Button onClick={() => setImage("")}>Remove</Button>
+                                            </div>
+                                        ) : (
+                                            <FileUpload
+                                                endpoint="collectionImage"
+                                                onChange={(url) => {
+                                                    setImage(url);
+                                                    field.onChange(url);
+                                                }}
+                                            />
+                                        )}
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
