@@ -1,6 +1,5 @@
 import EditCollectionForm from "@/app/(dashboard)/dashboard/(routes)/collections/[collectionId]/_component/EditCollectionForm";
 import { db } from "@/lib/db";
-import { useParams } from "next/navigation";
 import React from "react";
 
 
