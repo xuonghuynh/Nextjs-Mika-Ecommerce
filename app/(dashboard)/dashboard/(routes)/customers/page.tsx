@@ -14,7 +14,7 @@ const CustomersPage = async () => {
     console.log(allCustomer)
 
     return (
-        <div>
+        <div className="p-6">
             <CustomerTable data={allCustomer} columns={CustomerColumns} />
         </div>
     );
