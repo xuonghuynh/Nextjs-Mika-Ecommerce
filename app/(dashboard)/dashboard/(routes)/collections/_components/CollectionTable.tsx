@@ -71,6 +71,7 @@ export function CollectionTable<TData, TValue>({
                 />
                 <Link href="/dashboard/collections/new-collection">
                     <Button
+                        variant={"primaryOrange"}
                         className="ml-auto"
                     >
                         <PlusCircle className="mr-2 h-4 w-4" />
