@@ -17,9 +17,15 @@ import { z } from "zod";
 import { FileUpload } from "@/app/(dashboard)/_components/FileUpload";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { Pencil } from "lucide-react";
 
 const NewCollection = () => {
+    const router = useRouter();
     const [image, setImage] = useState<string | undefined>("");
+    const [isEditing, setIsEditing] = useState(false);
     const form = useForm<z.infer<typeof NewCollectionSchema>>({
         resolver: zodResolver(NewCollectionSchema),
         defaultValues: {
@@ -30,9 +36,16 @@ const NewCollection = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof NewCollectionSchema>) => {
-        console.log(values);
-        const { image } = form.getValues();
-        console.log(image);
+        try {
+            const result = await axios.post("/api/collection/create", values);
+            if (result.status === 200) {
+                console.log(result.data);
+                router.push("/dashboard/collections");
+                toast.success("Create collection successfully!");
+            }
+        } catch (error) {
+            toast.error("Create collection failed!");
+        }
     };
 
     return (
@@ -85,21 +98,44 @@ const NewCollection = () => {
                             name="image"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Image</FormLabel>
+                                    <FormLabel className="flex items-center justify-between">
+                                        <div>Image</div>
+                                        <Button
+                                            variant={"ghost"}
+                                            onClick={() =>
+                                                setIsEditing(!isEditing)
+                                            }
+                                        >
+                                            {!isEditing && image && <>Cancel</>}
+                                            {isEditing && image && (
+                                                <>
+                                                    <Pencil className="mr-2 h-4 w-4" />
+                                                    Edit
+                                                </>
+                                            )}
+                                        </Button>
+                                    </FormLabel>
                                     <FormControl>
-                                        {image ? (
-                                            <div>
-                                                <Image className="object-cover rounded-md" src={image} alt="collection image" width={300} height={300} />
-                                                <Button onClick={() => setImage("")}>Remove</Button>
-                                            </div>
-                                        ) : (
+                                        {!isEditing ? (
                                             <FileUpload
                                                 endpoint="collectionImage"
                                                 onChange={(url) => {
                                                     setImage(url);
+                                                    setIsEditing(true);
                                                     field.onChange(url);
                                                 }}
                                             />
+                                        ) : (
+                                            image && (
+                                                <div className="relative mt-2 aspect-video">
+                                                    <Image
+                                                        className="rounded-md object-cover"
+                                                        src={image}
+                                                        alt="Course image"
+                                                        fill
+                                                    />
+                                                </div>
+                                            )
                                         )}
                                     </FormControl>
                                     <FormMessage />

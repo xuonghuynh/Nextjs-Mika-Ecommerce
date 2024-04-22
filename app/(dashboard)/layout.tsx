@@ -7,6 +7,7 @@ import Navbar from "@/app/(dashboard)/_components/Navbar";
 import Sidebar from "@/app/(dashboard)/_components/SideBar";
 import "@/app/globals.css";
 import "@uploadthing/react/styles.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
     title: "Mika Dashboard",
@@ -27,6 +28,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
             <html lang="en">
                 <body>
+                    <Toaster position="top-center" />
                     <div className="h-full">
                         <div className="fixed inset-y-0 h-[80px] w-full md:pl-56">
                             <Navbar />
