@@ -73,7 +73,7 @@ model ResetPasswordToken {
 
 model Collection {
   id          String    @id @default(cuid())
-  name        String
+  name        String    @unique
   description String
   slug        String
   userId      String
@@ -81,6 +81,7 @@ model Collection {
   products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  @@unique([name, userId])
 }
 
 model Product {
@@ -92,9 +93,8 @@ model Product {
   image        String
   tags         String
   sizes        String
-  collectionId String
   stock        Int
-  collection   Collection @relation(fields: [collectionId], references: [id])
+  collections   Collection[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }

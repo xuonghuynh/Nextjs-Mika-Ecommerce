@@ -1,17 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
+import { CollectionTable } from "@/app/(dashboard)/dashboard/(routes)/collections/_components/CollectionTable";
+import { columns } from "@/app/(dashboard)/dashboard/(routes)/collections/_components/Colunms";
+import { getServerCurrentUser } from "@/lib/auth";
+import { db } from "@/lib/db";
 import React from "react";
 
-const CollectionPage = () => {
+const CollectionPage = async() => {
+    const user = await getServerCurrentUser();
+    const collection = await db.collection.findMany({
+        where: {
+            userId: user?.id,
+        },
+        include: {
+            products: true,
+        },
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
     return (
         <div className="p-6">
-            <Link href="/dashboard/collections/new-collection">
-                <Button className="ml-auto bg-main">
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Add Collection
-                </Button>
-            </Link>
+            <CollectionTable data={collection} columns={columns} />
         </div>
     );
 };

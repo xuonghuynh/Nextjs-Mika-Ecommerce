@@ -41,6 +41,7 @@ const NewCollection = () => {
             if (result.status === 200) {
                 console.log(result.data);
                 router.push("/dashboard/collections");
+                router.refresh();
                 toast.success("Create collection successfully!");
             }
         } catch (error) {
