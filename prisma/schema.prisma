@@ -91,7 +91,7 @@ model Product {
   userId         String
   description    String?        @db.Text
   images         ProductImage[]
-  tags           String?
+  tags           String[]
   sizes          String?
   price          Float?
   compareAtPrice Float?
@@ -109,4 +109,5 @@ model ProductImage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Product   Product  @relation(fields: [productId], references: [id])
+  @@index([productId])
 }

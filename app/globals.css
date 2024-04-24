@@ -81,7 +81,9 @@
     .font-hind {
         font-family: var(--font-hind);
     }
-    .ql-editor {
-        height: 150px !important;
-    }
+    
+}
+
+.ql-editor {
+    height: 200px !important;
 }
