@@ -1,6 +1,6 @@
 "use client";
 import SidebarRouteItem from "@/app/(dashboard)/_components/SidebarRouteItem";
-import { Boxes, Layout, Tag, Users } from "lucide-react";
+import { Boxes, Layout, ShoppingBag, Tag, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -19,6 +19,11 @@ const routesMenu = [
         lable: "Products",
         href: "/dashboard/products",
         icon: Tag,
+    },
+    {
+        lable: "Orders",
+        href: "/dashboard/orders",
+        icon: ShoppingBag,
     },
     {
         lable: "Customers",

@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { PlusCircle } from "lucide-react";
+import CreateButton from "@/app/(dashboard)/_components/CreateButton";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -69,15 +70,7 @@ export function CollectionTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
-                <Link href="/dashboard/collections/new-collection">
-                    <Button
-                        variant={"primaryOrange"}
-                        className="ml-auto"
-                    >
-                        <PlusCircle className="mr-2 h-4 w-4" />
-                        Create collection
-                    </Button>
-                </Link>
+                <CreateButton href="/dashboard/collections/new-collection" label="New Collection" />
             </div>
             <div className="rounded-md border">
                 <Table>

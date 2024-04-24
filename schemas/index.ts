@@ -32,3 +32,14 @@ export const NewCollectionSchema = z.object({
     description: z.string().min(1, { message: "Description is required" }),
     image: z.string().min(1, { message: "Image is required" }),
 });
+
+export const NewProductSchema = z.object({
+    name: z
+        .string()
+        .min(2, {
+            message: "Title must be at least 2 characters",
+        })
+        .max(50, {
+            message: "Title must be less than 50 characters",
+        }),
+});
