@@ -15,7 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Pencil, Trash, X } from "lucide-react";
+import { Pencil, PlusCircle, Trash, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Collection, ProductImage } from "@prisma/client";
@@ -103,7 +103,7 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                 productId: image.data.productId,
                 createdAt: new Date(image.data.createdAt),
                 updatedAt: new Date(image.data.updatedAt),
-            }
+            };
             field.onChange([...form.getValues().images, imageData]);
             toast.success("Image upload successfully");
             router.refresh();
@@ -120,7 +120,9 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                     imageId,
                 },
             });
-            field.onChange(form.getValues().images.filter((image) => image.id !== imageId));
+            field.onChange(
+                form.getValues().images.filter((image) => image.id !== imageId),
+            );
             toast.success("Image deleted successfully");
             router.refresh();
         } catch (error) {
@@ -170,20 +172,44 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="flex items-center justify-between">
-                                        <div>Image</div>
+                                        <div>Images</div>
+                                        {initialData.images.length > 0 && (
+                                            <Button
+                                                variant={"ghost"}
+                                                type="button"
+                                                onClick={() =>
+                                                    setIsEditingImage(
+                                                        !isEditingImage,
+                                                    )
+                                                }
+                                            >
+                                                {isEditingImage && <>Cancel</>}
+                                                {!isEditingImage && (
+                                                    <>
+                                                        <Pencil className="mr-2 h-4 w-4" />
+                                                        Edit
+                                                    </>
+                                                )}
+                                            </Button>
+                                        )}
                                     </FormLabel>
                                     <FormControl>
                                         <div>
-                                            <FileUpload
-                                                endpoint="collectionImage"
-                                                onChange={(url) => {
-                                                    onUploadProductImage(
-                                                        field,
-                                                        url!,
-                                                    );
-                                                }}
-                                            />
-                                            <div className="flex flex-wrap items-center gap-2 mt-4">
+                                            {((initialData.images.length > 0 &&
+                                                isEditingImage) ||
+                                                initialData.images.length ===
+                                                    0) && (
+                                                <FileUpload
+                                                    endpoint="collectionImage"
+                                                    onChange={(url) => {
+                                                        onUploadProductImage(
+                                                            field,
+                                                            url!,
+                                                        );
+                                                    }}
+                                                />
+                                            )}
+                                            <div className="mt-4 flex flex-wrap items-center gap-2">
                                                 {initialData.images.map(
                                                     (image) => (
                                                         <div
