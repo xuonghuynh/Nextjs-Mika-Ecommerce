@@ -14,15 +14,29 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
         console.log(values)
         // const { name, description, image } = await req.json();
 
-        const product = await db.product.update({
+        const product = db.product.update({
             where: {
                 id
             },
             data: {
-                userId: user.id,
-                ...values
+                ...values,
+                images: {
+                    updateMany: {
+                        where: {
+                            productId: id
+                        },
+                        data: {
+                            id: values.images.id,
+                            imageUrl: values.images.imageUrl,
+                            updatedAt: new Date(),
+                            createdAt: values.images.createdAt
+                        }
+                    }
+                }
             }
-        });
+        })
+
+        // await db.$transaction([updateProduct, product]);
 
         return NextResponse.json(product, { status: 200 });
 

@@ -29,7 +29,17 @@ const formSchema = z.object({
         message: "name is required",
     }),
     description: z.string(),
-    images: z.array(z.string()).optional(),
+    images: z
+        .array(
+            z.object({
+                id: z.string(),
+                imageUrl: z.string(),
+                productId: z.string(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
+            }),
+        )
+        .nonempty("Images are required"),
     tags: z.array(z.string()),
     collections: z.array(z.string()).optional(),
 });
@@ -48,17 +58,17 @@ interface ProductNameFormProps {
 
 const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
     const [isEditingImage, setIsEditingImage] = useState(false);
+    const [productImages, setProductImages] = useState<ProductImage[]>(
+        initialData.images,
+    );
     const router = useRouter();
-
-    console.log(initialData);
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: initialData.name,
             description: initialData.description || "",
             tags: initialData.tags || [],
-            // images: initialData.images || [],
+            images: initialData.images || [],
             // collections: initialData.collections[0] || [],
         },
     });
@@ -66,7 +76,10 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
     const { isSubmitting, isValid } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
+        console.log("values", values);
+        console.log("initialData", initialData);
+        const formData = form.getValues();
+        console.log(formData);
         try {
             await axios.patch(`/api/product/${productId}`, values);
             toast.success("Update successfully");
@@ -77,12 +90,21 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
         }
     };
 
-    const onUploadProductImage = async (url: string) => {
+    const onUploadProductImage = async (field: any, url: string) => {
         try {
-            await axios.post(`/api/product/${productId}/image`, {
+            console.log("Field", field);
+            const image = await axios.post(`/api/product/${productId}/image`, {
                 url,
                 productId,
             });
+            const imageData = {
+                id: image.data.id,
+                imageUrl: image.data.imageUrl,
+                productId: image.data.productId,
+                createdAt: new Date(image.data.createdAt),
+                updatedAt: new Date(image.data.updatedAt),
+            }
+            field.onChange([...form.getValues().images, imageData]);
             toast.success("Image upload successfully");
             router.refresh();
         } catch (error) {
@@ -91,13 +113,14 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
         }
     };
 
-    const onDeleteProductImage = async (imageId: string) => {
+    const onDeleteProductImage = async (field: any, imageId: string) => {
         try {
             await axios.delete(`/api/product/${productId}/image`, {
                 data: {
                     imageId,
                 },
             });
+            field.onChange(form.getValues().images.filter((image) => image.id !== imageId));
             toast.success("Image deleted successfully");
             router.refresh();
         } catch (error) {
@@ -150,41 +173,60 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                                         <div>Image</div>
                                     </FormLabel>
                                     <FormControl>
-                                        <FileUpload
-                                            endpoint="collectionImage"
-                                            onChange={(url) => {
-                                                onUploadProductImage(url!);
-                                                field.onChange(url);
-                                            }}
-                                        />
+                                        <div>
+                                            <FileUpload
+                                                endpoint="collectionImage"
+                                                onChange={(url) => {
+                                                    onUploadProductImage(
+                                                        field,
+                                                        url!,
+                                                    );
+                                                }}
+                                            />
+                                            <div className="flex flex-wrap items-center gap-2 mt-4">
+                                                {initialData.images.map(
+                                                    (image) => (
+                                                        <div
+                                                            key={image.id}
+                                                            className="group relative"
+                                                        >
+                                                            <Image
+                                                                className="aspect-video group-hover:bg-black/50"
+                                                                src={
+                                                                    image.imageUrl
+                                                                }
+                                                                width={250}
+                                                                height={250}
+                                                                alt="image"
+                                                            />
+                                                            <div className="absolute left-0 top-0 hidden h-full w-full bg-black/50 transition-all duration-300 group-hover:block">
+                                                                <Button
+                                                                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform hover:bg-transparent"
+                                                                    variant={
+                                                                        "ghost"
+                                                                    }
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        onDeleteProductImage(
+                                                                            field,
+                                                                            image.id,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <Trash className="h-6 w-6 text-red-500" />
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    ),
+                                                )}
+                                            </div>
+                                        </div>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <div className="flex flex-wrap items-center gap-2">
-                            {initialData.images.map((image) => (
-                                <div key={image.id} className="group relative">
-                                    <Image
-                                        className="aspect-video group-hover:bg-black/50"
-                                        src={image.imageUrl}
-                                        width={250}
-                                        height={250}
-                                        alt="image"
-                                    />
-                                    <div className="absolute left-0 top-0 hidden h-full w-full bg-black/50 transition-all duration-300 group-hover:block">
-                                        <Button
-                                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform hover:bg-transparent"
-                                            variant={"ghost"}
-                                            type="button"
-                                            onClick={() => onDeleteProductImage(image.id)}
-                                        >
-                                            <Trash className="h-6 w-6 text-red-500" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+
                         <div>
                             <Button
                                 type="submit"
