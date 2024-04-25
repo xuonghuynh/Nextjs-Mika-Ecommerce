@@ -7,6 +7,6 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
         from: "Mika Shop <mail@longxuong.com>",
         to: [email],
         subject: "Mika Shop Reset Your Password",
-        html: `<p>For resetting your password, please click on the link below</p><p><a href="http://localhost:3000/new-password?token=${token}">Reset Password</a></p>`,
+        html: `<p>For resetting your password, please click on the link below</p><p><a href="${process.env.PUBLIC_URL}/new-password?token=${token}">Reset Password</a></p>`,
     });
 };
