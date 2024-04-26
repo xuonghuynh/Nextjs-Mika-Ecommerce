@@ -14,7 +14,7 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
         console.log(values)
         // const { name, description, image } = await req.json();
 
-        const product = db.product.update({
+        const product = await db.product.update({
             where: {
                 id
             },
