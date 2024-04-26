@@ -51,7 +51,7 @@ interface ProductNameFormProps {
     productId: string;
     initialData: {
         name: string;
-        description: string;
+        description: string | null;
         tags: string[];
     } & {
         images: ProductImage[];
