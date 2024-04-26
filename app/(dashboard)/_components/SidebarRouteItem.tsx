@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -16,13 +17,9 @@ const SidebarRouteItem = ({ lable, icon: Icon, href }: SidebarItemProps) => {
 
     const isActive = href==="/dashboard" && pathname !== href ? false : pathname.startsWith(href);
 
-    const onClick = () => {
-        router.push(href);
-    };
     return (
-        <button
-            onClick={onClick}
-            type="button"
+        <Link
+            href={href}
             className={cn(
                 "flex items-center gap-x-2 pl-6 text-sm font-[500] text-slate-500 transition-all hover:bg-orange-300/20 hover:text-slate-600",
                 isActive &&
@@ -45,7 +42,7 @@ const SidebarRouteItem = ({ lable, icon: Icon, href }: SidebarItemProps) => {
                     isActive && "opacity-100",
                 )}
             />
-        </button>
+        </Link>
     );
 };
 
