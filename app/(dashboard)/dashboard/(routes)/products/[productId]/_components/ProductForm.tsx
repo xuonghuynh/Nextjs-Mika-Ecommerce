@@ -19,16 +19,19 @@ import { Pencil, PlusCircle, Trash, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Collection, ProductImage } from "@prisma/client";
-import { Editor } from "@/components/ui/editor";
+import Editor from "@/components/editor/Editor";
 import { FileUpload } from "@/app/(dashboard)/_components/FileUpload";
 import Image from "next/image";
 import MultiText from "@/app/(dashboard)/_components/MultiText";
+import "@/components/editor/prosemirror.css";
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "name is required",
+        message: "Name is required",
     }),
-    description: z.string(),
+    description: z.string().min(1, {
+        message: "Description is required",
+    }),
     images: z
         .array(
             z.object({
@@ -39,7 +42,7 @@ const formSchema = z.object({
                 updatedAt: z.date(),
             }),
         )
-        .nonempty("Images are required"),
+        .nonempty("Please upload at least one image for the product"),
     tags: z.array(z.string()),
     collections: z.array(z.string()).optional(),
 });
@@ -48,7 +51,7 @@ interface ProductNameFormProps {
     productId: string;
     initialData: {
         name: string;
-        description: string | null;
+        description: string;
         tags: string[];
     } & {
         images: ProductImage[];
@@ -58,9 +61,6 @@ interface ProductNameFormProps {
 
 const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
     const [isEditingImage, setIsEditingImage] = useState(false);
-    const [productImages, setProductImages] = useState<ProductImage[]>(
-        initialData.images,
-    );
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -76,10 +76,6 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
     const { isSubmitting, isValid } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log("values", values);
-        console.log("initialData", initialData);
-        const formData = form.getValues();
-        console.log(formData);
         try {
             await axios.patch(`/api/product/${productId}`, values);
             toast.success("Update successfully");
@@ -92,7 +88,6 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
 
     const onUploadProductImage = async (field: any, url: string) => {
         try {
-            console.log("Field", field);
             const image = await axios.post(`/api/product/${productId}/image`, {
                 url,
                 productId,
@@ -160,7 +155,13 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Editor {...field} />
+                                        <Editor
+                                            initialValue={JSON.parse(field.value)}
+                                            onChange={(value) => {
+                                                const descriptionOnString = JSON.stringify(value)
+                                                field.onChange(descriptionOnString)
+                                            }}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
