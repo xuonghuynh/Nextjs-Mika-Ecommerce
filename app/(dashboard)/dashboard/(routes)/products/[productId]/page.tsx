@@ -29,6 +29,12 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
         },
     });
 
+    const collection = await db.collection.findMany({
+        orderBy: {
+            name: "asc",
+        },
+    })
+
     if (!product) {
         return (
             <div className="flex items-center justify-center py-20 italic">
@@ -74,7 +80,7 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
                         />
                     </div>
                 </div>
-                <ProductForm initialData={product} productId={product.id} />
+                <ProductForm initialData={product} productId={product.id} initialCollections={collection} />
             </div>
         </div>
     );

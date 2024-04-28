@@ -109,5 +109,6 @@ model ProductImage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Product   Product  @relation(fields: [productId], references: [id])
+
   @@index([productId])
 }

@@ -8,7 +8,8 @@ import Sidebar from "@/app/(dashboard)/_components/SideBar";
 import "@/app/globals.css";
 import "@uploadthing/react/styles.css";
 import { Toaster } from "react-hot-toast";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
+import { NextUIProvider } from "@nextui-org/system";
 
 export const metadata = {
     title: "Mika Dashboard",
@@ -39,7 +40,7 @@ export default async function RootLayout({
                             <Sidebar />
                         </div>
                         <div className="h-full pt-[80px] md:pl-56">
-                            {children}
+                            <NextUIProvider>{children}</NextUIProvider>
                         </div>
                     </div>
                 </body>

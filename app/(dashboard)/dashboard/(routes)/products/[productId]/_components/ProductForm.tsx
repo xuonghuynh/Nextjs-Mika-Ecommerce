@@ -24,31 +24,12 @@ import { FileUpload } from "@/app/(dashboard)/_components/FileUpload";
 import Image from "next/image";
 import MultiText from "@/app/(dashboard)/_components/MultiText";
 import "@/components/editor/prosemirror.css";
-
-const formSchema = z.object({
-    name: z.string().min(1, {
-        message: "Name is required",
-    }),
-    description: z.string().min(1, {
-        message: "Description is required",
-    }),
-    images: z
-        .array(
-            z.object({
-                id: z.string(),
-                imageUrl: z.string(),
-                productId: z.string(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
-            }),
-        )
-        .nonempty("Please upload at least one image for the product"),
-    tags: z.array(z.string()),
-    collections: z.array(z.string()).optional(),
-});
+import {Select, SelectItem} from "@nextui-org/select";
+import { UpdateProductSchema } from "@/schemas";
 
 interface ProductNameFormProps {
     productId: string;
+    initialCollections: Collection[];
     initialData: {
         name: string;
         description: string | null;
@@ -59,23 +40,25 @@ interface ProductNameFormProps {
     };
 }
 
-const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
+const ProductForm = ({ initialData, initialCollections, productId }: ProductNameFormProps) => {
     const [isEditingImage, setIsEditingImage] = useState(false);
     const router = useRouter();
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof UpdateProductSchema>>({
+        resolver: zodResolver(UpdateProductSchema),
         defaultValues: {
             name: initialData.name,
             description: initialData.description || "",
             tags: initialData.tags || [],
             images: initialData.images || [],
-            // collections: initialData.collections[0] || [],
+            collections: initialData.collections.map((collection) => collection.id) || [],
         },
     });
 
+    console.log(initialCollections);
+
     const { isSubmitting, isValid } = form.formState;
 
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values: z.infer<typeof UpdateProductSchema>) => {
         try {
             await axios.patch(`/api/product/${productId}`, values);
             toast.success("Update successfully");
@@ -156,10 +139,15 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
                                         <Editor
-                                            initialValue={JSON.parse(field.value)}
+                                            initialValue={JSON.parse(
+                                                field.value,
+                                            )}
                                             onChange={(value) => {
-                                                const descriptionOnString = JSON.stringify(value)
-                                                field.onChange(descriptionOnString)
+                                                const descriptionOnString =
+                                                    JSON.stringify(value);
+                                                field.onChange(
+                                                    descriptionOnString,
+                                                );
                                             }}
                                         />
                                     </FormControl>
@@ -263,7 +251,7 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                             </Button>
                         </div>
                     </div>
-                    <div>
+                    <div className="flex flex-col gap-y-6">
                         <FormField
                             control={form.control}
                             name="tags"
@@ -291,6 +279,42 @@ const ProductForm = ({ initialData, productId }: ProductNameFormProps) => {
                                                 )
                                             }
                                         />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="collections"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="flex items-center justify-between">
+                                        <div>Collections</div>
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Select
+                                            aria-label="Collections"
+                                            placeholder="Select an collection"
+                                            selectionMode="multiple"
+                                            selectedKeys={field.value}
+                                            variant="underlined"
+                                            className="w-full"
+                                            onChange={(value) => {
+                                                const arrayIds = value.target.value.split(',');
+                                                console.log(arrayIds);
+                                                field.onChange(arrayIds);
+                                            }}
+                                        >
+                                            {initialCollections.map((collection) => (
+                                                <SelectItem
+                                                    key={collection.id}
+                                                    value={collection.id}
+                                                >
+                                                    {collection.name}
+                                                </SelectItem>
+                                            ))}
+                                        </Select>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

@@ -18,13 +18,13 @@ export const ForgotPasswordSchema = z.object({
     email: z
         .string()
         .min(1, { message: "Email is required" })
-        .email("This is not a valid email")
+        .email("This is not a valid email"),
 });
 
 export const NewPasswordSchema = z.object({
     password: z
         .string()
-        .min(6, { message: "Password must be at least 6 characters" })
+        .min(6, { message: "Password must be at least 6 characters" }),
 });
 
 export const NewCollectionSchema = z.object({
@@ -42,4 +42,39 @@ export const NewProductSchema = z.object({
         .max(50, {
             message: "Title must be less than 50 characters",
         }),
+});
+
+export const CollectionSelectSchema = z.array(
+    z.object({ 
+        id: z.string(), 
+        name: z.string(),
+        description: z.string(),
+        slug:        z.string(),
+        userId:      z.string(),
+        image:       z.string(),
+        createdAt:   z.date(),
+        updatedAt:   z.date(),
+    }),
+);
+
+export const UpdateProductSchema = z.object({
+    name: z.string().min(1, {
+        message: "Name is required",
+    }),
+    description: z.string().min(1, {
+        message: "Description is required",
+    }),
+    images: z
+        .array(
+            z.object({
+                id: z.string(),
+                imageUrl: z.string(),
+                productId: z.string(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
+            }),
+        )
+        .nonempty("Please upload at least one image for the product"),
+    tags: z.array(z.string()),
+    collections: z.string().array(),
 });

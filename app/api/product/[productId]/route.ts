@@ -12,7 +12,6 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
             return new NextResponse("Unauthorized", { status: 401 });
         }
         console.log(values)
-        // const { name, description, image } = await req.json();
 
         const product = await db.product.update({
             where: {
@@ -32,11 +31,13 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
                             createdAt: values.images.createdAt
                         }
                     }
+                },
+                collections: {
+                    set: [],
+                    connect: values.collections.map((collection: string) => ({ id: collection })) || []
                 }
             }
         })
-
-        // await db.$transaction([updateProduct, product]);
 
         return NextResponse.json(product, { status: 200 });
 
