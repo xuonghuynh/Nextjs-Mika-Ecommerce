@@ -1,10 +1,11 @@
 import { CollectionTable } from "@/app/(dashboard)/dashboard/(routes)/collections/_components/CollectionTable";
 import { columns } from "@/app/(dashboard)/dashboard/(routes)/collections/_components/Colunms";
+import WhiteBoxWrapper from "@/components/WhiteBox";
 import { getServerCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import React from "react";
 
-const CollectionPage = async() => {
+const CollectionPage = async () => {
     const user = await getServerCurrentUser();
     const collection = await db.collection.findMany({
         where: {
@@ -18,9 +19,9 @@ const CollectionPage = async() => {
         },
     });
     return (
-        <div className="p-6">
+        <WhiteBoxWrapper>
             <CollectionTable data={collection} columns={columns} />
-        </div>
+        </WhiteBoxWrapper>
     );
 };
 

@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { NewProductSchema } from "@/schemas";
 import toast from "react-hot-toast";
+import WhiteBoxWrapper from "@/components/WhiteBox";
 
 const NewProductPage = () => {
     const router = useRouter();
@@ -47,6 +48,7 @@ const NewProductPage = () => {
             // Redirect the user to the new course's page
             router.push(`/dashboard/products/${response.data.id}`);
             toast.success("Create product successfully!");
+            router.refresh();
         } catch (error) {
             // Log the error
             console.log(error);
@@ -57,48 +59,50 @@ const NewProductPage = () => {
     return (
         <div className="h-full">
             <div className="mx-auto flex h-full max-w-5xl p-6 md:items-center md:justify-center">
-                <div>
-                    <h1 className="text-2xl">Product Name</h1>
-                    <p className="text-sm text-purple-600">
-                        What would you like to name your product? Don&apos;t
-                        worry, you can change it later.
-                    </p>
-                    <Form {...form}>
-                        <form
-                            onSubmit={form.handleSubmit(onSubmit)}
-                            className="mt-8 space-y-8"
-                        >
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Product name</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="e.g Skull Candy Headphones"
-                                                {...field}
-                                                disabled={isSubmitting}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <div className="flex items-center gap-x-2">
-                                <Link href={"/dashboard/products"}>
-                                    <Button variant="ghost">Cancel</Button>
-                                </Link>
-                                <Button
-                                    disabled={!isValid || isSubmitting}
-                                    type="submit"
-                                >
-                                    Submit
-                                </Button>
-                            </div>
-                        </form>
-                    </Form>
-                </div>
+                <WhiteBoxWrapper>
+                    <div>
+                        <h1 className="text-2xl">Product Name</h1>
+                        <p className="text-sm text-purple-600">
+                            What would you like to name your product? Don&apos;t
+                            worry, you can change it later.
+                        </p>
+                        <Form {...form}>
+                            <form
+                                onSubmit={form.handleSubmit(onSubmit)}
+                                className="mt-8 space-y-8"
+                            >
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Product name</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="e.g Skull Candy Headphones"
+                                                    {...field}
+                                                    disabled={isSubmitting}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <div className="flex items-center gap-x-2">
+                                    <Link href={"/dashboard/products"}>
+                                        <Button variant="ghost">Cancel</Button>
+                                    </Link>
+                                    <Button
+                                        disabled={!isValid || isSubmitting}
+                                        type="submit"
+                                    >
+                                        Submit
+                                    </Button>
+                                </div>
+                            </form>
+                        </Form>
+                    </div>
+                </WhiteBoxWrapper>
             </div>
         </div>
     );

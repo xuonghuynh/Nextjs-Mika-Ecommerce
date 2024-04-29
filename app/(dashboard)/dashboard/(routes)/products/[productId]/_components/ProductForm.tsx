@@ -47,14 +47,12 @@ const ProductForm = ({ initialData, initialCollections, productId }: ProductName
         resolver: zodResolver(UpdateProductSchema),
         defaultValues: {
             name: initialData.name,
-            description: initialData.description || "",
+            description: initialData.description || '""',
             tags: initialData.tags || [],
             images: initialData.images || [],
             collections: initialData.collections.map((collection) => collection.id) || [],
         },
     });
-
-    console.log(initialCollections);
 
     const { isSubmitting, isValid } = form.formState;
 
@@ -245,7 +243,7 @@ const ProductForm = ({ initialData, initialCollections, productId }: ProductName
                         <div>
                             <Button
                                 type="submit"
-                                disabled={isSubmitting || !isValid}
+                                // disabled={isSubmitting || !isValid}
                             >
                                 Save
                             </Button>
@@ -302,8 +300,9 @@ const ProductForm = ({ initialData, initialCollections, productId }: ProductName
                                             className="w-full"
                                             onChange={(value) => {
                                                 const arrayIds = value.target.value.split(',');
-                                                console.log(arrayIds);
-                                                field.onChange(arrayIds);
+                                                const cleanedArray = arrayIds.filter((id) => id !== '');
+                                                console.log(cleanedArray);
+                                                field.onChange(cleanedArray);
                                             }}
                                         >
                                             {initialCollections.map((collection) => (

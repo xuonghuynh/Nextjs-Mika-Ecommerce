@@ -11,7 +11,24 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
         if (!user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
-        console.log(values)
+
+        const {collectionsss} = values
+        console.log("========COLLECTION=========", values.collections)
+
+        let collections = null
+
+        if(values.collections.length > 0) {
+            collections = {
+                set: [],
+                connect: values.collections.map((collection: string) => ({ id: collection }))
+            }
+        } else {
+            collections = {
+                set: [],
+            }
+        }
+
+        // const connectCollection = values.colllections !== undefined ? {connect: values.collections.map((collection: string) => ({ id: collection }))} : {}
 
         const product = await db.product.update({
             where: {
@@ -32,10 +49,7 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
                         }
                     }
                 },
-                collections: {
-                    set: [],
-                    connect: values.collections.map((collection: string) => ({ id: collection })) || []
-                }
+                collections
             }
         })
 
@@ -43,6 +57,28 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
 
     } catch (error) {
         console.log("PRODUCT_UPDATE", error);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}
+
+export async function DELETE(req: Request, { params }: { params: { productId: string } }) {
+    try {
+        const user = await getServerCurrentUser();
+        const id  = params.productId;
+
+        if (!user) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        const deletedProduct = await db.product.delete({
+            where: {
+                id
+            }
+        })
+
+        return NextResponse.json(deletedProduct, { status: 200 });
+    } catch (error) {
+        console.log("PRODUCT_DELETE", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

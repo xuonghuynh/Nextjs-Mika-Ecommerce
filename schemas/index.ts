@@ -76,5 +76,5 @@ export const UpdateProductSchema = z.object({
         )
         .nonempty("Please upload at least one image for the product"),
     tags: z.array(z.string()),
-    collections: z.string().array(),
+    collections: z.array(z.string()),
 });

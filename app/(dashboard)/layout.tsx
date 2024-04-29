@@ -33,14 +33,16 @@ export default async function RootLayout({
                     <Toaster position="top-center" />
                     <NextTopLoader showSpinner={false} color="#AB8D7A" />
                     <div className="h-full">
-                        <div className="fixed inset-y-0 h-[80px] w-full md:pl-56">
+                        <div className="fixed inset-y-0 h-[80px] w-full bg-white md:pl-56">
                             <Navbar />
                         </div>
-                        <div className="fixed inset-y-0 z-50 hidden h-full w-56 flex-col md:flex">
+                        <div className="fixed inset-y-0 z-50 hidden h-full w-56 flex-col bg-white md:flex">
                             <Sidebar />
                         </div>
-                        <div className="h-full pt-[80px] md:pl-56">
-                            <NextUIProvider>{children}</NextUIProvider>
+                        <div className="h-full bg-[#F2F7FB] pt-[80px] md:pl-56">
+                            <div className="p-6">
+                                <NextUIProvider>{children}</NextUIProvider>
+                            </div>
                         </div>
                     </div>
                 </body>

@@ -1,22 +1,18 @@
+import { getCustomers } from "@/actions/get-customers";
 import { CustomerColumns } from "@/app/(dashboard)/dashboard/(routes)/customers/_components/CustomerColunms";
 import { CustomerTable } from "@/app/(dashboard)/dashboard/(routes)/customers/_components/CustomerTable";
+import WhiteBoxWrapper from "@/components/WhiteBox";
 import { db } from "@/lib/db";
 import React from "react";
 
 const CustomersPage = async () => {
     
-    const allCustomer = await db.user.findMany({
-        include: {
-            accounts: true,
-        }
-    });
-
-    console.log(allCustomer)
+    const allCustomer = await getCustomers()
 
     return (
-        <div className="p-6">
+        <WhiteBoxWrapper>
             <CustomerTable data={allCustomer} columns={CustomerColumns} />
-        </div>
+        </WhiteBoxWrapper>
     );
 };
 
