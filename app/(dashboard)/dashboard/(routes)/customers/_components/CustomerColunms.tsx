@@ -2,12 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash } from "lucide-react";
-import {useFormatter} from 'next-intl';
+import { ArrowUpDown } from "lucide-react";
 
 
-import { Account, User } from "@prisma/client";
-import AlertRemoveCollection from "@/app/(dashboard)/dashboard/(routes)/collections/_components/AlertRemoveCollection";
+import { Account } from "@prisma/client";
 import RowAction from "@/app/(dashboard)/dashboard/(routes)/collections/_components/RowAction";
 import { formatDate } from "@/ultils/format-date";
 

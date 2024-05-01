@@ -2,7 +2,6 @@ import { getCustomers } from "@/actions/get-customers";
 import { CustomerColumns } from "@/app/(dashboard)/dashboard/(routes)/customers/_components/CustomerColunms";
 import { CustomerTable } from "@/app/(dashboard)/dashboard/(routes)/customers/_components/CustomerTable";
 import WhiteBoxWrapper from "@/components/WhiteBox";
-import { db } from "@/lib/db";
 import React from "react";
 
 const CustomersPage = async () => {
