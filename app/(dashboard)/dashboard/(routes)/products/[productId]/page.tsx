@@ -1,5 +1,4 @@
 import Banner from "@/app/(dashboard)/_components/Banner";
-import IconBadget from "@/app/(dashboard)/_components/IconBadget";
 import ProductActions from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductAction";
 import ProductForm from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductForm";
 import { getServerCurrentUser } from "@/lib/auth";

@@ -3,7 +3,6 @@
 import { Button as ShadButton } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ImageIcon } from "lucide-react";
-import { useFormatter } from "next-intl";
 
 import { Collection, Product, ProductImage } from "@prisma/client";
 import Image from "next/image";
