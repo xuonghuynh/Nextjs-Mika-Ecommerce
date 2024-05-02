@@ -26,7 +26,7 @@ const UserButton = () => {
                         color="warning"
                         src={user?.image || ""}
                     />
-                    <div className="text-left">
+                    <div className="text-left hidden md:block">
                         <p className="text-sm font-medium">{user?.name}</p>
                         <p className="text-xs text-muted-foreground">
                             {user?.email}

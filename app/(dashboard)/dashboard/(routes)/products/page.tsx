@@ -2,6 +2,7 @@ import { getProducts } from "@/actions/get-products";
 import CreateButton from "@/app/(dashboard)/_components/CreateButton";
 import { ProductColumns } from "@/app/(dashboard)/dashboard/(routes)/products/_components/ProductColumns";
 import { ProductTable } from "@/app/(dashboard)/dashboard/(routes)/products/_components/ProductTable";
+import Title from "@/components/Title";
 import WhiteBoxWrapper from "@/components/WhiteBox";
 import React from "react";
 
@@ -11,13 +12,12 @@ const ProductPage = async () => {
     console.log(products);
 
     return (
-        <WhiteBoxWrapper>
-            <CreateButton
-                href="/dashboard/products/new-product"
-                label="New Product"
-            />
-            <ProductTable data={products} columns={ProductColumns} />
-        </WhiteBoxWrapper>
+        <div className="p-8">
+            <Title name="Products" />
+            <WhiteBoxWrapper>
+                <ProductTable data={products} columns={ProductColumns} />
+            </WhiteBoxWrapper>
+        </div>
     );
 };
 

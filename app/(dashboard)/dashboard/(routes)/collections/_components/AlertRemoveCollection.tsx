@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 type AlertDialogProps = {
     id: string;
@@ -34,9 +35,11 @@ const AlertRemoveCollection = ({
             if (result.status === 200) {
                 router.refresh();
                 onOpenChange(false);
+                toast.success("Collection deleted successfully");
             }
         } catch (error) {
             console.log(error);
+            toast.error("Something went wrong");
         }
     };
 

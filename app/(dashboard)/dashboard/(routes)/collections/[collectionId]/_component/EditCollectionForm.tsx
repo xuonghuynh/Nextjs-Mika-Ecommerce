@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Pencil } from "lucide-react";
 import { Collection } from "@prisma/client";
+import Link from "next/link";
 
 type EditCollectionFormProps = {
     collectionId: string;
@@ -29,10 +30,13 @@ type EditCollectionFormProps = {
         name: string;
         description: string;
         image: string;
-    }
-}
+    };
+};
 
-const EditCollectionForm = ({initialData, collectionId}: EditCollectionFormProps) => {
+const EditCollectionForm = ({
+    initialData,
+    collectionId,
+}: EditCollectionFormProps) => {
     const [image, setImage] = useState<string | undefined>(initialData.image);
     const [isEditing, setIsEditing] = useState(false);
     const router = useRouter();
@@ -43,7 +47,10 @@ const EditCollectionForm = ({initialData, collectionId}: EditCollectionFormProps
 
     const onSubmit = async (values: z.infer<typeof NewCollectionSchema>) => {
         try {
-            const result = await axios.patch(`/api/collection/${collectionId}`, values);
+            const result = await axios.patch(
+                `/api/collection/${collectionId}`,
+                values,
+            );
             if (result.status === 200) {
                 console.log(result.data);
                 router.refresh();
@@ -55,18 +62,10 @@ const EditCollectionForm = ({initialData, collectionId}: EditCollectionFormProps
     };
 
     return (
-        <div className="p-6">
-            <div className="flex items-center justify-between">
-                <div className="flex flex-col gap-y-2">
-                    <h1 className="text-2xl font-medium">Edit collection</h1>
-                </div>
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8"
-                    >
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div className="flex flex-col gap-y-4">
                         <FormField
                             control={form.control}
                             name="name"
@@ -97,6 +96,25 @@ const EditCollectionForm = ({initialData, collectionId}: EditCollectionFormProps
                                 </FormItem>
                             )}
                         />
+                        <div>
+                            <Link href="/dashboard/collections">
+                                <Button
+                                    className="mr-5"
+                                    type="button"
+                                    variant={"outline"}
+                                >
+                                    Back
+                                </Button>
+                            </Link>
+                            <Button
+                                type="submit"
+                                variant={"primaryOrange"}
+                            >
+                                Update
+                            </Button>
+                        </div>
+                    </div>
+                    <div>
                         <FormField
                             control={form.control}
                             name="image"
@@ -132,12 +150,13 @@ const EditCollectionForm = ({initialData, collectionId}: EditCollectionFormProps
                                             />
                                         ) : (
                                             image && (
-                                                <div className="relative mt-2 aspect-video">
+                                                <div className="relative flex items-center justify-center">
                                                     <Image
                                                         className="rounded-md object-cover"
                                                         src={image}
                                                         alt="Course image"
-                                                        fill
+                                                        height={250}
+                                                        width={250}
                                                     />
                                                 </div>
                                             )
@@ -147,11 +166,10 @@ const EditCollectionForm = ({initialData, collectionId}: EditCollectionFormProps
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Update</Button>
-                    </form>
-                </Form>
-            </div>
-        </div>
+                    </div>
+                </div>
+            </form>
+        </Form>
     );
 };
 

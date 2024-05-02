@@ -19,8 +19,7 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
 
     const product = await db.product.findUnique({
         where: {
-            id: params.productId,
-            userId: user?.id,
+            id: params.productId
         },
         include: {
             images: true,

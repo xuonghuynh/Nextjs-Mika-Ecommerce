@@ -20,7 +20,10 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Pencil } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
+import Title from "@/components/Title";
+import WhiteBoxWrapper from "@/components/WhiteBox";
+import Link from "next/link";
 
 const NewCollection = () => {
     const router = useRouter();
@@ -50,103 +53,127 @@ const NewCollection = () => {
     };
 
     return (
-        <div className="p-6">
-            <div className="flex items-center justify-between">
-                <div className="flex flex-col gap-y-2">
-                    <h1 className="text-2xl font-medium">
-                        Create new collection
-                    </h1>
-                </div>
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="p-8">
+            <Title name="Create new collection" />
+            <WhiteBoxWrapper>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className="space-y-8"
                     >
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Description</FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            placeholder=""
-                                            {...field}
-                                            rows={5}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="image"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="flex items-center justify-between">
-                                        <div>Image</div>
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div className="flex flex-col gap-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Name</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder=""
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="description"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Description</FormLabel>
+                                            <FormControl>
+                                                <Textarea
+                                                    placeholder=""
+                                                    {...field}
+                                                    rows={5}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <div>
+                                    <Link href="/dashboard/collections">
                                         <Button
-                                            variant={"ghost"}
-                                            onClick={() =>
-                                                setIsEditing(!isEditing)
-                                            }
+                                            className="mr-5"
+                                            type="button"
+                                            variant={"outline"}
                                         >
-                                            {!isEditing && image && <>Cancel</>}
-                                            {isEditing && image && (
-                                                <>
-                                                    <Pencil className="mr-2 h-4 w-4" />
-                                                    Edit
-                                                </>
-                                            )}
+                                            Cancel
                                         </Button>
-                                    </FormLabel>
-                                    <FormControl>
-                                        {!isEditing ? (
-                                            <FileUpload
-                                                endpoint="collectionImage"
-                                                onChange={(url) => {
-                                                    setImage(url);
-                                                    setIsEditing(true);
-                                                    field.onChange(url);
-                                                }}
-                                            />
-                                        ) : (
-                                            image && (
-                                                <div className="relative mt-2 aspect-video">
-                                                    <Image
-                                                        className="rounded-md object-cover"
-                                                        src={image}
-                                                        alt="Course image"
-                                                        fill
+                                    </Link>
+                                    <Button
+                                        type="submit"
+                                        variant={"primaryOrange"}
+                                    >
+                                        <Plus className="mr-2 h-3 w-3" />
+                                        Create
+                                    </Button>
+                                </div>
+                            </div>
+                            <div>
+                                <FormField
+                                    control={form.control}
+                                    name="image"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center justify-between">
+                                                <div>Image</div>
+                                                <Button
+                                                    variant={"ghost"}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setIsEditing(!isEditing)
+                                                    }
+                                                >
+                                                    {!isEditing && image && (
+                                                        <>Cancel</>
+                                                    )}
+                                                    {isEditing && image && (
+                                                        <>
+                                                            <Pencil className="mr-2 h-4 w-4" />
+                                                            Edit
+                                                        </>
+                                                    )}
+                                                </Button>
+                                            </FormLabel>
+                                            <FormControl>
+                                                {!isEditing ? (
+                                                    <FileUpload
+                                                        endpoint="collectionImage"
+                                                        onChange={(url) => {
+                                                            setImage(url);
+                                                            setIsEditing(true);
+                                                            field.onChange(url);
+                                                        }}
                                                     />
-                                                </div>
-                                            )
-                                        )}
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button type="submit">Submit</Button>
+                                                ) : (
+                                                    image && (
+                                                        <div className="relative mt-2 flex items-center justify-center">
+                                                            <Image
+                                                                className="rounded-md object-cover"
+                                                                src={image}
+                                                                alt="Course image"
+                                                                width={250}
+                                                                height={250}
+                                                            />
+                                                        </div>
+                                                    )
+                                                )}
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
                     </form>
                 </Form>
-            </div>
+            </WhiteBoxWrapper>
         </div>
     );
 };

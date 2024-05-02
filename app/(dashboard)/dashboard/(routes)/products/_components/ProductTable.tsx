@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import CreateButton from "@/app/(dashboard)/_components/CreateButton";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -66,6 +67,10 @@ export function ProductTable<TData, TValue>({
                             ?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
+                />
+                <CreateButton
+                    href="/dashboard/products/new-product"
+                    label="New Product"
                 />
             </div>
             <div className="rounded-md border">

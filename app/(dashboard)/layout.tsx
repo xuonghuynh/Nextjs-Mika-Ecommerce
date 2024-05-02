@@ -40,9 +40,7 @@ export default async function RootLayout({
                             <Sidebar />
                         </div>
                         <div className="h-full bg-[#F2F7FB] pt-[80px] md:pl-56">
-                            <div className="p-6">
-                                <NextUIProvider>{children}</NextUIProvider>
-                            </div>
+                            <NextUIProvider>{children}</NextUIProvider>
                         </div>
                     </div>
                 </body>
