@@ -67,7 +67,7 @@ const RegisterForm = () => {
                             <FormItem>
                                 <FormLabel>Full Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="shadcn" {...field} />
+                                    <Input placeholder="" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -80,7 +80,7 @@ const RegisterForm = () => {
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="shadcn" {...field} />
+                                    <Input placeholder="" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -95,7 +95,7 @@ const RegisterForm = () => {
                                 <FormControl>
                                     <Input
                                         type="password"
-                                        placeholder="shadcn"
+                                        placeholder=""
                                         {...field}
                                     />
                                 </FormControl>

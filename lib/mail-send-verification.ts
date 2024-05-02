@@ -8,6 +8,6 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         from: "Mika Shop <mail@longxuong.com>",
         to: [email],
         subject: "Mika Shop verification email",
-        html: `<p>Hi there, please click on the link below to verify your email address.</p><p><a href="${process.env.PUBLIC_URL}/verify-email?token=${token}">Verify Email</a></p>`,
+        html: `<p>Hi there, please click on the link below to verify your email addressss.</p><p><a href="${process.env.PUBLIC_URL}/verify-email?token=${token}">Verify Email</a></p>`,
     });
 };

@@ -10,8 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FaUser } from "react-icons/fa";
+import { Avatar } from "@nextui-org/avatar";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const UserButton = () => {
@@ -19,12 +18,21 @@ const UserButton = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <Avatar>
-                    <AvatarImage src={user?.image || ""} />
-                    <AvatarFallback>
-                        <FaUser />
-                    </AvatarFallback>
-                </Avatar>
+                <div className="flex items-center gap-x-4">
+                    <Avatar
+                        isBordered
+                        showFallback
+                        name={user?.name || ""}
+                        color="warning"
+                        src={user?.image || ""}
+                    />
+                    <div className="text-left">
+                        <p className="text-sm font-medium">{user?.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                            {user?.email}
+                        </p>
+                    </div>
+                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
