@@ -3,6 +3,7 @@ import { getProductById } from "@/actions/get-product-by-id";
 import Banner from "@/app/(dashboard)/_components/Banner";
 import ProductActions from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductAction";
 import ProductForm from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductForm";
+import Title from "@/components/Title";
 import { getServerCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import React from "react";
@@ -55,7 +56,7 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
             <div className="p-6">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-y-2">
-                        <h1 className="text-2xl font-medium">Product Setup</h1>
+                        <Title classname="mb-0" name="Product Setup" />
                         <div className="text-sm text-slate-700">
                             Please complete all fieds ({completionText})
                         </div>

@@ -13,7 +13,7 @@ export async function PATCH(req: Request, { params }: { params: { productId: str
         }
 
         const {collectionsss} = values
-        console.log("========COLLECTION=========", values.collections)
+        console.log("========COLLECTION=========", values)
 
         let collections = null
 

@@ -47,6 +47,7 @@
     "novel": "^0.3.1",
     "query-string": "^9.0.0",
     "react": "^18",
+    "react-currency-input-field": "^3.8.0",
     "react-dom": "^18",
     "react-draft-wysiwyg": "^1.15.0",
     "react-hook-form": "^7.51.3",

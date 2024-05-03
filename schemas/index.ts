@@ -64,6 +64,10 @@ export const UpdateProductSchema = z.object({
     description: z.string().min(1, {
         message: "Description is required",
     }),
+    price: z.coerce.number().min(0.1, {
+        message: "Price is required",
+    }),
+    compareAtPrice: z.coerce.number().optional(),
     images: z
         .array(
             z.object({
@@ -77,4 +81,7 @@ export const UpdateProductSchema = z.object({
         .nonempty("Please upload at least one image for the product"),
     tags: z.array(z.string()),
     collections: z.array(z.string()),
+}).refine((data) => data.compareAtPrice === undefined || data.price >= data.compareAtPrice, {
+    message: "Compare at price must be less than price",
+    path: ["compareAtPrice"],
 });

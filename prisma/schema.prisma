@@ -94,7 +94,7 @@ model Product {
   tags           String[]
   colors         String[]
   sizes          String?
-  price          Float?
+  price          Float          @default(0)
   compareAtPrice Float?
   stock          Int            @default(0)
   isPublished    Boolean        @default(false)
