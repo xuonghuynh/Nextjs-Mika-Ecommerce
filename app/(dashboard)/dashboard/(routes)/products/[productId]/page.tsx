@@ -1,3 +1,5 @@
+import { getCollections } from "@/actions/get-collections";
+import { getProductById } from "@/actions/get-product-by-id";
 import Banner from "@/app/(dashboard)/_components/Banner";
 import ProductActions from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductAction";
 import ProductForm from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductForm";
@@ -17,21 +19,9 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
         );
     }
 
-    const product = await db.product.findUnique({
-        where: {
-            id: params.productId
-        },
-        include: {
-            images: true,
-            collections: true,
-        },
-    });
+    const product = await getProductById(productId);
 
-    const collection = await db.collection.findMany({
-        orderBy: {
-            name: "asc",
-        },
-    })
+    const collection = await getCollections();
 
     if (!product) {
         return (

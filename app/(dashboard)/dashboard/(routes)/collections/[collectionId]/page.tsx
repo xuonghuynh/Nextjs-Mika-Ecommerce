@@ -1,3 +1,4 @@
+import { getCollectionById } from "@/actions/get-collection-by-id";
 import EditCollectionForm from "@/app/(dashboard)/dashboard/(routes)/collections/[collectionId]/_component/EditCollectionForm";
 import Title from "@/components/Title";
 import WhiteBoxWrapper from "@/components/WhiteBox";
@@ -10,11 +11,7 @@ const EditCollectionPage = async ({
     params: { collectionId: string };
 }) => {
     const { collectionId } = params;
-    const colletion = await db.collection.findUnique({
-        where: {
-            id: collectionId,
-        },
-    });
+    const colletion = await getCollectionById(collectionId);
 
     if (!colletion)
         return (
