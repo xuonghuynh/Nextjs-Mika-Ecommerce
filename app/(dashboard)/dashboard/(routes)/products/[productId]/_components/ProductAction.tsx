@@ -64,7 +64,7 @@ const ProductActions = ({
                 variant={"outline"}
                 size={"sm"}
             >
-                {isPublished ? "Unpublish" : "Publish"}
+                {isPublished ? "Draft" : "Active"}
             </Button>
             <ConfirmModal onConfirm={onDelete}>
                 <Button size={"sm"} disabled={isLoading}>

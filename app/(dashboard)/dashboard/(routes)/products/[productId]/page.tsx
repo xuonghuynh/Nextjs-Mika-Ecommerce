@@ -4,8 +4,10 @@ import Banner from "@/app/(dashboard)/_components/Banner";
 import ProductActions from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductAction";
 import ProductForm from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ProductForm";
 import Title from "@/components/Title";
+import { Badge } from "@/components/ui/badge";
 import { getServerCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
@@ -56,7 +58,17 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
             <div className="p-6">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-y-2">
-                        <Title classname="!mb-0" name="Product Setup" />
+                        <div className="flex items-center gap-x-5">
+                            <Title classname="!mb-0" name="Product Setup" />
+                            <Badge
+                                className={cn(
+                                    "bg-slate-500 mt-1",
+                                    product.isPublished && "bg-green-600",
+                                )}
+                            >
+                                {product.isPublished ? "Active" : "Draft"}
+                            </Badge>
+                        </div>
                         <div className="text-sm text-slate-700">
                             Please complete all fieds ({completionText})
                         </div>
@@ -69,7 +81,11 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
                         />
                     </div>
                 </div>
-                <ProductForm initialData={product} productId={product.id} initialCollections={collection} />
+                <ProductForm
+                    initialData={product}
+                    productId={product.id}
+                    initialCollections={collection}
+                />
             </div>
         </div>
     );
