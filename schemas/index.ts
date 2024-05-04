@@ -67,6 +67,7 @@ export const UpdateProductSchema = z.object({
     price: z.coerce.number().min(0.1, {
         message: "Price is required",
     }),
+    stock: z.coerce.number(),
     compareAtPrice: z.coerce.number().optional(),
     colors: z.array(z.string()),
     images: z

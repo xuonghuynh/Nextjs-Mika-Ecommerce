@@ -56,7 +56,7 @@ const ProductIdPage = async ({ params }: { params: { productId: string } }) => {
             <div className="p-6">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-y-2">
-                        <Title classname="mb-0" name="Product Setup" />
+                        <Title classname="!mb-0" name="Product Setup" />
                         <div className="text-sm text-slate-700">
                             Please complete all fieds ({completionText})
                         </div>

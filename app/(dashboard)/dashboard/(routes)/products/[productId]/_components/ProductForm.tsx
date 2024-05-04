@@ -33,6 +33,7 @@ import { SketchPicker, TwitterPicker } from "react-color";
 import Link from "next/link";
 import ColorPicker from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorPickerPopover";
 import ColorPickerPopover from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorPickerPopover";
+import NumberInput from "@/components/NumberInput";
 
 interface ProductNameFormProps {
     productId: string;
@@ -44,6 +45,7 @@ interface ProductNameFormProps {
         price: number | null;
         compareAtPrice: number | null;
         colors: string[];
+        stock: number | null;
     } & {
         images: ProductImage[];
         collections: Collection[];
@@ -67,6 +69,7 @@ const ProductForm = ({
             compareAtPrice: initialData.compareAtPrice || 0,
             images: initialData.images || [],
             colors: initialData.colors || [],
+            stock: initialData.stock || 0,
             collections:
                 initialData.collections.map((collection) => collection.id) ||
                 [],
@@ -183,6 +186,25 @@ const ProductForm = ({
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                     <FormField
                                         control={form.control}
+                                        name="stock"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    Inventory <RequiredMark />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <NumberInput value={field.value} onChange={(value) => {
+                                                        field.onChange(value)
+                                                    }} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                    <FormField
+                                        control={form.control}
                                         name="price"
                                         render={({ field }) => (
                                             <FormItem>
@@ -207,9 +229,6 @@ const ProductForm = ({
                                                                 value ===
                                                                 undefined
                                                             ) {
-                                                                console.log(
-                                                                    "object",
-                                                                );
                                                                 field.onChange(
                                                                     0,
                                                                 );
@@ -218,7 +237,6 @@ const ProductForm = ({
                                                                     value,
                                                                 );
                                                             }
-                                                            console.log(value);
                                                         }}
                                                     />
                                                 </FormControl>
@@ -232,14 +250,14 @@ const ProductForm = ({
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>
-                                                    Compare At Price ($)
+                                                    Sale Price ($)
                                                 </FormLabel>
                                                 <FormControl>
                                                     <CurrencyInput
                                                         id="input-price"
                                                         className="w-full rounded-md border px-[12px] py-[8px] "
                                                         name="input-name"
-                                                        placeholder="Compare At Price"
+                                                        placeholder="Sale Price"
                                                         defaultValue={
                                                             field.value
                                                         }
@@ -252,9 +270,6 @@ const ProductForm = ({
                                                                 value ===
                                                                 undefined
                                                             ) {
-                                                                console.log(
-                                                                    "object",
-                                                                );
                                                                 field.onChange(
                                                                     0,
                                                                 );
@@ -344,9 +359,6 @@ const ProductForm = ({
                                                                         id !==
                                                                         "",
                                                                 );
-                                                            console.log(
-                                                                cleanedArray,
-                                                            );
                                                             field.onChange(
                                                                 cleanedArray,
                                                             );
@@ -461,7 +473,59 @@ const ProductForm = ({
                                                 <div>Colors</div>
                                             </FormLabel>
                                             <FormControl>
-                                                <ColorPickerPopover />
+                                                <div>
+                                                    <div className="mt-4 flex items-center gap-2">
+                                                        {field.value.map(
+                                                            (color) => (
+                                                                <div
+                                                                    key={color}
+                                                                    className="group relative h-8 w-8 rounded-full"
+                                                                    style={{
+                                                                        backgroundColor:
+                                                                            color,
+                                                                    }}
+                                                                >
+                                                                    <X
+                                                                        className="absolute left-1/2 top-1/2 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 transform cursor-pointer text-white group-hover:block"
+                                                                        onClick={() =>
+                                                                            field.onChange(
+                                                                                field.value.filter(
+                                                                                    (
+                                                                                        removeColor,
+                                                                                    ) =>
+                                                                                        removeColor !==
+                                                                                        color,
+                                                                                ),
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                </div>
+                                                            ),
+                                                        )}
+                                                        <ColorPickerPopover
+                                                            onChange={(
+                                                                value,
+                                                            ) => {
+                                                                if (
+                                                                    !field.value.includes(
+                                                                        value,
+                                                                    )
+                                                                ) {
+                                                                    field.onChange(
+                                                                        [
+                                                                            ...field.value,
+                                                                            value,
+                                                                        ],
+                                                                    );
+                                                                } else {
+                                                                    toast.error(
+                                                                        "Color already added",
+                                                                    );
+                                                                }
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

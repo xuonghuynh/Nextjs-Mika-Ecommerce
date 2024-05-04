@@ -41,10 +41,10 @@ const ProductActions = ({
         setIsLoading(true);
         try {
             if(isPublished) {
-                await axios.patch(`/api/Products/${productId}/unpublish`);
+                await axios.patch(`/api/product/${productId}/unpublish`);
                 toast.success("Product unpublished!");
             } else {
-                await axios.patch(`/api/Products/${productId}/publish`);
+                await axios.patch(`/api/product/${productId}/publish`);
                 toast.success("Product published!");
             }
 

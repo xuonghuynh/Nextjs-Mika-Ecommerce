@@ -9,6 +9,8 @@ import Image from "next/image";
 import TableTitle from "@/components/TableTitle";
 import ProductRowActions from "@/app/(dashboard)/dashboard/(routes)/products/_components/ProductRowActions";
 import { formatPrice } from "@/ultils/formats";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 type CollumnsProps = Product & {
     images: ProductImage[];
@@ -75,10 +77,8 @@ export const ProductColumns: ColumnDef<CollumnsProps>[] = [
             );
         },
         cell: ({ row }) => {
-            return (
-                <div>{formatPrice(row.original.price)}</div>
-            );
-        }
+            return <div>{formatPrice(row.original.price)}</div>;
+        },
     },
     {
         accessorKey: "stock",
@@ -94,6 +94,41 @@ export const ProductColumns: ColumnDef<CollumnsProps>[] = [
                     Stock
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </ShadButton>
+            );
+        },
+        cell: ({ row }) => {
+            const stock = row.original.stock || 0;
+            return (
+                <div>
+                    {stock > 0 ? <div>{stock} in stock</div> : <div className="text-red-500">Out of stock</div>}
+                </div>
+            )
+        },
+    },
+    {
+        accessorKey: "isPublished",
+        header: ({ column }) => {
+            return (
+                <ShadButton
+                    className="p-0 hover:bg-transparent"
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Published
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </ShadButton>
+            );
+        },
+        cell: ({ row }) => {
+            const isPublished = row.getValue("isPublished") || false;
+            return (
+                <Badge
+                    className={cn("bg-slate-500", isPublished && "bg-sky-700")}
+                >
+                    {isPublished ? "Published" : "Draft"}
+                </Badge>
             );
         },
     },

@@ -4,9 +4,18 @@ import CustomRadio from "@/app/(dashboard)/dashboard/(routes)/products/[productI
 
 const colors = ["#000000", "#83878A", "#F0EADE", "#D2E4F2", "#EEF5EE", "#0ea5e9", "#a855f7", "#f43f5e", "#16a34a", "#facc15"];
 
-const ColorRadioPicker = () => {
+type ColorRadioPickerProps = {
+    onChange: (value: string) => void;
+};
+
+
+
+const ColorRadioPicker = ({onChange}: ColorRadioPickerProps) => {
+    const handleValue = (value: string) => {
+        onChange(value);
+    }
     return (
-        <RadioGroup label="Select product color" orientation="horizontal">
+        <RadioGroup label="Select product color" orientation="horizontal" onChange={(value) => handleValue(value.target.value)}>
             <div className="flex flex-wrap gap-3">
                 {colors.map((color, index) => (
                     <CustomRadio key={index} value={color}>

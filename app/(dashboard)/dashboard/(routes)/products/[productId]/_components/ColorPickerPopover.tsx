@@ -9,28 +9,31 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import ColorRadioPicker from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorRadioPicker";
 
-const ColorPickerPopover = () => {
+type PickerProps = {
+    onChange: (value: string) => void;
+};
+
+const ColorPickerPopover = ({onChange}: PickerProps) => {
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState("#000000");
     const handleOnChange = (color: any) => {
-        console.log(color.hex);
-        setColor(color.hex);
+        setColor(color);
     };
 
     const handleSaveColor = () => {
+        onChange(color);
         setOpen(false);
     };
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button variant="outline">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add
+                <Button variant="outline" className="h-9 w-9 p-0 rounded-full m-0">
+                    <Plus className="h-4 w-4" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-80" side="top" sideOffset={5}>
-                <ColorRadioPicker />
+                <ColorRadioPicker onChange={handleOnChange} />
                 <Button
                     className="mt-4"
                     variant="outline"
