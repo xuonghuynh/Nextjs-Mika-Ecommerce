@@ -8,6 +8,7 @@ import { Collection, Product, ProductImage } from "@prisma/client";
 import Image from "next/image";
 import TableTitle from "@/components/TableTitle";
 import ProductRowActions from "@/app/(dashboard)/dashboard/(routes)/products/_components/ProductRowActions";
+import { formatPrice } from "@/ultils/formats";
 
 type CollumnsProps = Product & {
     images: ProductImage[];
@@ -73,6 +74,11 @@ export const ProductColumns: ColumnDef<CollumnsProps>[] = [
                 </ShadButton>
             );
         },
+        cell: ({ row }) => {
+            return (
+                <div>{formatPrice(row.original.price)}</div>
+            );
+        }
     },
     {
         accessorKey: "stock",

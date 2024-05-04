@@ -93,7 +93,6 @@ model Product {
   images         ProductImage[]
   tags           String[]
   colors         String[]
-  sizes          String?
   price          Float          @default(0)
   compareAtPrice Float?
   stock          Int            @default(0)

@@ -7,7 +7,7 @@ import { ArrowUpDown } from "lucide-react";
 
 import { Account } from "@prisma/client";
 import RowAction from "@/app/(dashboard)/dashboard/(routes)/collections/_components/RowAction";
-import { formatDate } from "@/ultils/format-date";
+import { formatDate } from "@/ultils/formats";
 
 type CollumnsProps = {
     id: string;

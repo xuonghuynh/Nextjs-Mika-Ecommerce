@@ -29,7 +29,10 @@ import CurrencyInput from "react-currency-input-field";
 import { UpdateProductSchema } from "@/schemas";
 import WhiteBoxWrapper from "@/components/WhiteBox";
 import RequiredMark from "@/components/RequiredMark";
+import { SketchPicker, TwitterPicker } from "react-color";
 import Link from "next/link";
+import ColorPicker from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorPickerPopover";
+import ColorPickerPopover from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorPickerPopover";
 
 interface ProductNameFormProps {
     productId: string;
@@ -40,6 +43,7 @@ interface ProductNameFormProps {
         tags: string[];
         price: number | null;
         compareAtPrice: number | null;
+        colors: string[];
     } & {
         images: ProductImage[];
         collections: Collection[];
@@ -62,6 +66,7 @@ const ProductForm = ({
             price: initialData.price || 0,
             compareAtPrice: initialData.compareAtPrice || 0,
             images: initialData.images || [],
+            colors: initialData.colors || [],
             collections:
                 initialData.collections.map((collection) => collection.id) ||
                 [],
@@ -196,17 +201,24 @@ const ProductForm = ({
                                                         prefix="$"
                                                         decimalsLimit={2}
                                                         onValueChange={(
-                                                            value
+                                                            value,
                                                         ) => {
-                                                            if(value === undefined) {
-                                                                console.log('object')
-                                                                field.onChange(0);
+                                                            if (
+                                                                value ===
+                                                                undefined
+                                                            ) {
+                                                                console.log(
+                                                                    "object",
+                                                                );
+                                                                field.onChange(
+                                                                    0,
+                                                                );
                                                             } else {
                                                                 field.onChange(
                                                                     value,
                                                                 );
                                                             }
-                                                            console.log(value)
+                                                            console.log(value);
                                                         }}
                                                     />
                                                 </FormControl>
@@ -234,11 +246,18 @@ const ProductForm = ({
                                                         prefix="$"
                                                         decimalsLimit={2}
                                                         onValueChange={(
-                                                            value
+                                                            value,
                                                         ) => {
-                                                            if(value === undefined) {
-                                                                console.log('object')
-                                                                field.onChange(0);
+                                                            if (
+                                                                value ===
+                                                                undefined
+                                                            ) {
+                                                                console.log(
+                                                                    "object",
+                                                                );
+                                                                field.onChange(
+                                                                    0,
+                                                                );
                                                             } else {
                                                                 field.onChange(
                                                                     value,
@@ -428,6 +447,21 @@ const ProductForm = ({
                                                         />
                                                     </div>
                                                 </div>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="colors"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center justify-between">
+                                                <div>Colors</div>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <ColorPickerPopover />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
