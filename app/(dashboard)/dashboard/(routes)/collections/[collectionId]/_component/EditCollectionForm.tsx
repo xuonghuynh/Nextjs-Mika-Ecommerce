@@ -21,7 +21,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Pencil } from "lucide-react";
-import { Collection } from "@prisma/client";
 import Link from "next/link";
 
 type EditCollectionFormProps = {
