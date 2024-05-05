@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { Home, ShoppingBag, User } from "lucide-react";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -9,9 +10,10 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import { menu } from "@/data/static-data/menu";
+// import { menu } from "@/data/static-data/menu";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { Collection } from "@prisma/client";
 
 type MenuProps = {
     name: string;
@@ -20,7 +22,32 @@ type MenuProps = {
     icon: LucideIcon;
 };
 
-const Menu = () => {
+type collectionsType = Collection[];
+
+const Menu = ({ collections }: { collections: collectionsType }) => {
+    const menu = [
+        {
+            name: "Home",
+            link: "/",
+            icon: Home,
+            subMenu: [],
+        },
+        {
+            name: "Shop",
+            link: "/shop",
+            icon: ShoppingBag,
+            subMenu: collections.map((collection) => ({
+                name: collection.name,
+                link: `/collection/${collection.id}`,
+            })),
+        },
+        {
+            name: "About",
+            link: "/about",
+            icon: User,
+            subMenu: [],
+        },
+    ];
     const onNavChange = () => {
         setTimeout(() => {
             // Select elements with the state "open"

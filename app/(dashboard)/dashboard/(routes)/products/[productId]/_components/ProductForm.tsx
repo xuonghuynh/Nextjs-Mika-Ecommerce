@@ -193,50 +193,12 @@ const ProductForm = ({
                                                     Inventory <RequiredMark />
                                                 </FormLabel>
                                                 <FormControl>
-                                                    <NumberInput value={field.value} onChange={(value) => {
-                                                        field.onChange(value)
-                                                    }} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <FormField
-                                        control={form.control}
-                                        name="price"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>
-                                                    Price ($) <RequiredMark />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <CurrencyInput
-                                                        id="input-price"
-                                                        className="w-full rounded-md border px-[12px] py-[8px] "
-                                                        name="input-name"
-                                                        placeholder="Price"
-                                                        defaultValue={
-                                                            field.value
-                                                        }
-                                                        prefix="$"
-                                                        decimalsLimit={2}
-                                                        onValueChange={(
-                                                            value,
-                                                        ) => {
-                                                            if (
-                                                                value ===
-                                                                undefined
-                                                            ) {
-                                                                field.onChange(
-                                                                    0,
-                                                                );
-                                                            } else {
-                                                                field.onChange(
-                                                                    value,
-                                                                );
-                                                            }
+                                                    <NumberInput
+                                                        value={field.value}
+                                                        onChange={(value) => {
+                                                            field.onChange(
+                                                                value,
+                                                            );
                                                         }}
                                                     />
                                                 </FormControl>
@@ -246,40 +208,68 @@ const ProductForm = ({
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="compareAtPrice"
+                                        name="colors"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>
-                                                    Sale Price ($)
+                                                <FormLabel className="flex items-center justify-between">
+                                                    <div>Colors</div>
                                                 </FormLabel>
                                                 <FormControl>
-                                                    <CurrencyInput
-                                                        id="input-price"
-                                                        className="w-full rounded-md border px-[12px] py-[8px] "
-                                                        name="input-name"
-                                                        placeholder="Sale Price"
-                                                        defaultValue={
-                                                            field.value
-                                                        }
-                                                        prefix="$"
-                                                        decimalsLimit={2}
-                                                        onValueChange={(
-                                                            value,
-                                                        ) => {
-                                                            if (
-                                                                value ===
-                                                                undefined
-                                                            ) {
-                                                                field.onChange(
-                                                                    0,
-                                                                );
-                                                            } else {
-                                                                field.onChange(
+                                                    <div>
+                                                        <div className="mt-4 flex items-center gap-2">
+                                                            {field.value.map(
+                                                                (color) => (
+                                                                    <div
+                                                                        key={
+                                                                            color
+                                                                        }
+                                                                        className="group relative h-8 w-8 rounded-full"
+                                                                        style={{
+                                                                            backgroundColor:
+                                                                                color,
+                                                                        }}
+                                                                    >
+                                                                        <X
+                                                                            className="absolute left-1/2 top-1/2 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 transform cursor-pointer text-white group-hover:block"
+                                                                            onClick={() =>
+                                                                                field.onChange(
+                                                                                    field.value.filter(
+                                                                                        (
+                                                                                            removeColor,
+                                                                                        ) =>
+                                                                                            removeColor !==
+                                                                                            color,
+                                                                                    ),
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </div>
+                                                                ),
+                                                            )}
+                                                            <ColorPickerPopover
+                                                                onChange={(
                                                                     value,
-                                                                );
-                                                            }
-                                                        }}
-                                                    />
+                                                                ) => {
+                                                                    if (
+                                                                        !field.value.includes(
+                                                                            value,
+                                                                        )
+                                                                    ) {
+                                                                        field.onChange(
+                                                                            [
+                                                                                ...field.value,
+                                                                                value,
+                                                                            ],
+                                                                        );
+                                                                    } else {
+                                                                        toast.error(
+                                                                            "Color already added",
+                                                                        );
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -387,6 +377,109 @@ const ProductForm = ({
                                         )}
                                     />
                                 </div>
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="price"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    Price ($) <RequiredMark />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <CurrencyInput
+                                                        id="input-price"
+                                                        className="w-full rounded-md border px-[12px] py-[8px] "
+                                                        name="input-name"
+                                                        placeholder="Price"
+                                                        defaultValue={
+                                                            field.value
+                                                        }
+                                                        prefix="$"
+                                                        decimalsLimit={2}
+                                                        onValueChange={(
+                                                            value,
+                                                        ) => {
+                                                            if (
+                                                                value ===
+                                                                undefined
+                                                            ) {
+                                                                field.onChange(
+                                                                    0,
+                                                                );
+                                                            } else {
+                                                                field.onChange(
+                                                                    value,
+                                                                );
+                                                            }
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="compareAtPrice"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    Sale Price ($)
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <CurrencyInput
+                                                        id="input-price"
+                                                        className="w-full rounded-md border px-[12px] py-[8px] "
+                                                        name="input-name"
+                                                        placeholder="Sale Price"
+                                                        defaultValue={
+                                                            field.value
+                                                        }
+                                                        prefix="$"
+                                                        decimalsLimit={2}
+                                                        onValueChange={(
+                                                            value,
+                                                        ) => {
+                                                            if (
+                                                                value ===
+                                                                undefined
+                                                            ) {
+                                                                field.onChange(
+                                                                    0,
+                                                                );
+                                                            } else {
+                                                                field.onChange(
+                                                                    value,
+                                                                );
+                                                            }
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                
+                                <div>
+                                    <Link href="/dashboard/products">
+                                        <Button
+                                            className="mr-5"
+                                            type="button"
+                                            variant={"outline"}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Link>
+                                    <Button
+                                        type="submit"
+                                        variant={"primaryOrange"}
+                                        // disabled={isSubmitting || !isValid}
+                                    >
+                                        Save Product
+                                    </Button>
+                                </div>
                             </div>
                         </WhiteBoxWrapper>
                     </div>
@@ -464,91 +557,6 @@ const ProductForm = ({
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
-                                    control={form.control}
-                                    name="colors"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center justify-between">
-                                                <div>Colors</div>
-                                            </FormLabel>
-                                            <FormControl>
-                                                <div>
-                                                    <div className="mt-4 flex items-center gap-2">
-                                                        {field.value.map(
-                                                            (color) => (
-                                                                <div
-                                                                    key={color}
-                                                                    className="group relative h-8 w-8 rounded-full"
-                                                                    style={{
-                                                                        backgroundColor:
-                                                                            color,
-                                                                    }}
-                                                                >
-                                                                    <X
-                                                                        className="absolute left-1/2 top-1/2 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 transform cursor-pointer text-white group-hover:block"
-                                                                        onClick={() =>
-                                                                            field.onChange(
-                                                                                field.value.filter(
-                                                                                    (
-                                                                                        removeColor,
-                                                                                    ) =>
-                                                                                        removeColor !==
-                                                                                        color,
-                                                                                ),
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                </div>
-                                                            ),
-                                                        )}
-                                                        <ColorPickerPopover
-                                                            onChange={(
-                                                                value,
-                                                            ) => {
-                                                                if (
-                                                                    !field.value.includes(
-                                                                        value,
-                                                                    )
-                                                                ) {
-                                                                    field.onChange(
-                                                                        [
-                                                                            ...field.value,
-                                                                            value,
-                                                                        ],
-                                                                    );
-                                                                } else {
-                                                                    toast.error(
-                                                                        "Color already added",
-                                                                    );
-                                                                }
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <div>
-                                    <Link href="/dashboard/products">
-                                        <Button
-                                            className="mr-5"
-                                            type="button"
-                                            variant={"outline"}
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </Link>
-                                    <Button
-                                        type="submit"
-                                        variant={"primaryOrange"}
-                                        // disabled={isSubmitting || !isValid}
-                                    >
-                                        Save Product
-                                    </Button>
-                                </div>
                             </div>
                         </WhiteBoxWrapper>
                     </div>

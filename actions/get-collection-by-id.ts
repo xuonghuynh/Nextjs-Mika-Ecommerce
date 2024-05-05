@@ -6,6 +6,9 @@ export const getCollectionById = async (id: string) => {
             where: {
                 id
             },
+            include: {
+                products: true
+            }
         });
         return collection;
     } catch (error) {
