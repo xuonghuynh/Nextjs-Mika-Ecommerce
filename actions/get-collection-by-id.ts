@@ -7,7 +7,11 @@ export const getCollectionById = async (id: string) => {
                 id
             },
             include: {
-                products: true
+                products: {
+                    include: {
+                        images: true
+                    }
+                }
             }
         });
         return collection;
