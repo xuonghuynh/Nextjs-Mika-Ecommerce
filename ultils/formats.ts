@@ -13,3 +13,8 @@ export const formatPrice = (price: number) => {
         currency: "USD",
     }).format(price);
 }
+
+export function calculateDiscountPercentage(originalPrice: number, salePrice: number) {
+    const percentageDiscount = ((originalPrice - salePrice) / originalPrice) * 100;
+    return percentageDiscount;
+  }

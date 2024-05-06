@@ -8,6 +8,9 @@ export const getCollectionById = async (id: string) => {
             },
             include: {
                 products: {
+                    where: {
+                        isPublished: true
+                    },
                     include: {
                         images: true
                     }

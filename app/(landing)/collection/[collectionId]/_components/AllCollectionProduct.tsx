@@ -1,8 +1,7 @@
 import React from "react";
 import { Collection, Product, ProductImage } from "@prisma/client";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import Image from "next/image";
 import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
 
 type ProductCollectionProps = {
     collection: Collection & {
@@ -26,33 +25,7 @@ const AllCollectionProduct = ({ collection }: ProductCollectionProps) => {
                     key={product.id}
                     className="group"
                 >
-                    <Card
-                        key={product.id}
-                        className=" rounded-none border-none shadow-none"
-                    >
-                        <CardHeader className="relative h-[300px] bg-[#F9F5F2]">
-                            <Image
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out group-hover:opacity-0"
-                                alt="nextui logo"
-                                height={500}
-                                src={product.images[0].imageUrl}
-                                width={500}
-                            />
-                            <Image
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100"
-                                alt="nextui logo"
-                                height={300}
-                                src={product.images[1].imageUrl}
-                                width={500}
-                            />
-                        </CardHeader>
-                        <CardBody>
-                            <div className="font-hind text-center font-normal transition-all group-hover:text-main">
-                                {product.name}
-                            </div>
-                        </CardBody>
-                        <CardFooter></CardFooter>
-                    </Card>
+                    <ProductCard product={product} />
                 </Link>
             ))}
         </div>
