@@ -43,17 +43,17 @@ const animateVariants = (index: number) => ({
 
 const ProductShowcase = () => {
     return (
-        <section className="container px-10 py-20">
+        <section className="container px-5 md:py-20">
             <div>
                 {productShowcase.map((product: productProps, index) => (
                     <div
                         key={index}
                         className={cn(
-                            "flex py-12",
-                            index % 2 === 0 ? "flex-row" : "flex-row-reverse",
+                            "md:flex py-12",
+                            index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse",
                         )}
                     >
-                        <div className="w-1/2 ">
+                        <div className="w-full md:w-1/2 ">
                             <motion.div
                                 variants={animateVariants(index)}
                                 initial="initial"
@@ -75,10 +75,10 @@ const ProductShowcase = () => {
                         </div>
                         <motion.div
                             className={cn(
-                                "flex w-1/2 items-center px-20",
+                                "flex w-full md:w-1/2 items-center md:px-20",
                                 index % 2 === 0
                                     ? "justify-start"
-                                    : "justify-end",
+                                    : "md:justify-end",
                             )}
                             variants={animateVariants(index)}
                             initial={
@@ -90,7 +90,7 @@ const ProductShowcase = () => {
                             viewport={{ once: true }}
                         >
                             <div className="flex max-w-[350px] flex-col gap-y-3">
-                                <div className="font-medium text-main">
+                                <div className="font-medium text-main mt-5 md:mt-0">
                                     {product.subtitle}
                                 </div>
                                 <div className="font-hind text-[40px] font-bold leading-[48px]">

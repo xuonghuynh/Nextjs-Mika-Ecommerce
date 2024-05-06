@@ -4,7 +4,7 @@ import React from "react";
 
 const Banner = () => {
     return (
-        <section className="h-[900px] bg-[url('/banner.webp')] bg-cover bg-no-repeat bg-center">
+        <section className="h-[430px] md:h-[900px] bg-[url('/banner.webp')] bg-cover bg-no-repeat bg-center">
             <BannerContent />
         </section>
     );

@@ -13,7 +13,7 @@ const AllCollectionProduct = ({ collection }: ProductCollectionProps) => {
     const products = collection.products;
     if (products.length <= 0)
         return (
-            <div className="mt-10 text-center text-sm italic">
+            <div className="mt-20 text-center text-sm italic mb-20">
                 This collection has no products
             </div>
         );

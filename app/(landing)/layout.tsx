@@ -5,6 +5,7 @@ import Navbar from "@/app/(landing)/_components/Navbar";
 import Footer from "@/app/(landing)/_components/Footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import NextTopLoader from "nextjs-toploader";
 
 const poppin = Poppins({
     subsets: ["latin"],
@@ -35,6 +36,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
             <html lang="en">
                 <body className={`${poppin.variable} ${hind.variable}`}>
+                    <NextTopLoader showSpinner={false} color="#AB8D7A" />
                     <Navbar />
                     {children}
                     <Footer />

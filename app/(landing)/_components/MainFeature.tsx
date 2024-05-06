@@ -13,7 +13,7 @@ type FeatureProps = {
 const MainFeature = () => {
     return (
         <div className="w-full bg-[url(/banner2.webp)] bg-cover bg-center bg-no-repeat py-[120px]">
-            <div className="container flex items-center justify-end">
+            <div className="container flex items-center justify-center md:justify-end">
                 <div>
                     <div className="font-hind text-[40px] font-bold">
                         Main Features

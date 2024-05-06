@@ -7,6 +7,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SheetClose } from "@/components/ui/sheet";
 
 const MobileMenuRoutes = async () => {
     const collections = await getCollections();
@@ -36,21 +37,31 @@ const MobileMenuRoutes = async () => {
                 {menuItems.map((item, index) => (
                     <AccordionItem key={index} value={item.name}>
                         {item.subMenu.length > 0 ? (
-                            <AccordionTrigger>{item.name}</AccordionTrigger>
+                            <AccordionTrigger className="w-full">
+                                {item.name}
+                            </AccordionTrigger>
                         ) : (
-                            <AccordionTrigger hideArrow={true}>
-                                <Link href={item.link}>{item.name}</Link>
+                            <AccordionTrigger className="" hideArrow={true}>
+                                <SheetClose asChild>
+                                    <Link
+                                        className="flex w-full items-center justify-start"
+                                        href={item.link}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </SheetClose>
                             </AccordionTrigger>
                         )}
                         {item.subMenu.length > 0 &&
                             item.subMenu.map((subItem) => (
                                 <AccordionContent key={subItem.name}>
-                                    <Link href={subItem.link}>
-                                        {subItem.name}
-                                    </Link>
+                                    <SheetClose asChild>
+                                        <Link href={subItem.link}>
+                                            {subItem.name}
+                                        </Link>
+                                    </SheetClose>
                                 </AccordionContent>
-                            ))
-                        }
+                            ))}
                     </AccordionItem>
                 ))}
             </Accordion>

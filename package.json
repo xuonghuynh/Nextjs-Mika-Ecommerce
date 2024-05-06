@@ -43,6 +43,8 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "embla-carousel-autoplay": "^8.0.4",
+    "embla-carousel-react": "^8.0.4",
     "framer-motion": "^11.0.28",
     "jodit-react": "^4.0.30",
     "lucide-react": "^0.367.0",

@@ -6,13 +6,13 @@ const BannerContent = () => {
     return (
         <div className="container flex h-full flex-col items-start justify-center">
             <div className="max-w-[700px]">
-                <div className="before:bg-main before:translate-[-50%] relative pl-[30px] text-2xl font-semibold before:absolute before:bottom-[50%] before:left-0 before:block before:h-[1px] before:w-[15px]">
+                <div className="before:bg-main before:translate-[-50%] relative pl-[30px] text-lg md:text-2xl font-semibold before:absolute before:bottom-[50%] before:left-0 before:block before:h-[1px] before:w-[15px]">
                     Get up to 10% off
                 </div>
-                <div className="text-main mt-5 text-[80px] font-semibold leading-none">
+                <div className="text-main mt-5 text-2xl md:text-[80px] font-semibold leading-none max-w-[200px] md:max-w-none">
                     Noise wireless headphones
                 </div>
-                <div className="mt-7 flex gap-3">
+                <div className="mt-7 flex flex-col md:flex-row gap-3">
                     <Link
                         href="/shop"
                     >
