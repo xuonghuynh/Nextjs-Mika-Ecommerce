@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const FooterNavbar = () => {
     return (
-        <div className="mx-auto mb-6 mt-6 gap-x-10 md:flex md:flex-row md:flex-nowrap">
+        <div className="mx-auto mb-6 mt-6 gap-x-10 flex flex-row flex-wrap justify-center md:flex md:flex-row md:flex-nowrap">
             {footerNavMenu.map((menu, index) => (
                 <Link key={index} href={menu.link}>
-                    <div className="relative text-base text-white before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-white before:transition-transform before:duration-300 hover:before:origin-left hover:before:scale-x-100">
+                    <div className="relative text-sm md:text-base text-white before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:origin-right before:scale-x-0 before:bg-white before:transition-transform before:duration-300 hover:before:origin-left hover:before:scale-x-100">
                         {menu.name}
                     </div>
                 </Link>

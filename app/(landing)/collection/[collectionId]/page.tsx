@@ -14,7 +14,7 @@ const CollectionIdPage = async ({
     if (!collection) return <div>Collection not found</div>;
     console.log(collection);
     return (
-        <div className="container mt-10 h-full md:min-h-[calc(100vh-650px)]">
+        <div className="container mt-10">
             <div className="flex h-full gap-4">
                 <CollectionSidebar />
                 <div className="w-full">

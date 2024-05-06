@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <div className="py-24 bg-[url(/footer-image.webp)] bg-cover bg-center">
             <div className="container flex flex-col gap-y-5">
-                <div className="text-white text-[40px] font-semibold text-center font-hind">Sign up to our newsletter list</div>
+                <div className="text-white text-[24px] md:text-[40px] font-semibold text-center font-hind">Sign up to our newsletter list</div>
                 <NewsLetterForm />
                 <FooterNavbar />
                 <Divider />

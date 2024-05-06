@@ -20,24 +20,24 @@ const ProductCard = ({ product }: ProductCardProps) => {
             key={product.id}
             className=" rounded-none border-none shadow-none"
         >
-            <CardHeader className="relative h-[300px] bg-[#F9F5F2]">
+            <CardHeader className="relative h-[200px] md:h-[300px] bg-[#F9F5F2]">
                 <ProductDiscountPercent className={"absolute top-0 right-0"} price={product.price} salePrice={product.compareAtPrice} />
                 <Image
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out group-hover:opacity-0"
                     alt="nextui logo"
-                    height={500}
+                    height={250}
+                    width={250}
                     src={product.images[0].imageUrl}
-                    width={500}
                 />
                 <Image
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100"
                     alt="nextui logo"
-                    height={300}
+                    height={250}
+                    width={250}
                     src={product.images[1].imageUrl}
-                    width={500}
                 />
                 <ProductAction
-                    className="absolute bottom-5 left-1/2 z-[100] -translate-x-1/2 translate-y-0 opacity-0 transition-all duration-500 ease-in-out group-hover:translate-y-[-10px] group-hover:opacity-100"
+                    className="absolute bottom-2 md:bottom-5 left-1/2 z-[100] -translate-x-1/2 translate-y-0 md:opacity-0 transition-all duration-500 ease-in-out md:group-hover:translate-y-[-10px] md:group-hover:opacity-100"
                     productId={product.id}
                 />
             </CardHeader>

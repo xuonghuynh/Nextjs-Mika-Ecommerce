@@ -22,8 +22,8 @@ const ProductAction = ({ className, productId }: ProductActionProps) => {
             <TooltipProvider delayDuration={300}>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button className="rounded-full h-10 w-10 p-0" variant={"primaryOrange"}>
-                            <ShoppingBag className="h-4 w-4" />
+                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"}>
+                            <ShoppingBag className="h-3 w-3 md:h-4 md:w-4" />
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -34,8 +34,8 @@ const ProductAction = ({ className, productId }: ProductActionProps) => {
             <TooltipProvider delayDuration={300}>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button className="rounded-full h-10 w-10 p-0" variant={"primaryOrange"} onClick={() => router.push(`/product/${productId}`)}>
-                            <Eye className="h-4 w-4" />
+                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"} onClick={() => router.push(`/product/${productId}`)}>
+                            <Eye className="h-3 w-3 md:h-4 md:w-4" />
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -46,8 +46,8 @@ const ProductAction = ({ className, productId }: ProductActionProps) => {
             <TooltipProvider delayDuration={300}>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button className="rounded-full h-10 w-10 p-0" variant={"primaryOrange"}>
-                            <Heart className="h-4 w-4" />
+                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"}>
+                            <Heart className="h-3 w-3 md:h-4 md:w-4" />
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>

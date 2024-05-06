@@ -15,7 +15,7 @@ const CollectionHeader = ({collection}: CollectionHeaderProps) => {
             <div className="text-base font-semibold">
                 {collection.name} ({productCount})
             </div>
-            <div className=" relative mt-4 h-[200px] w-full">
+            <div className=" relative mt-4 h-[100px] md:h-[250px] w-full">
                 <Image src={collection.image} alt={collection.name} fill />
             </div>
         </div>

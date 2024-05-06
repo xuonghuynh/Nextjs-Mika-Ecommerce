@@ -18,7 +18,7 @@ const AllCollectionProduct = ({ collection }: ProductCollectionProps) => {
             </div>
         );
     return (
-        <div className="mt-6 grid grid-cols-3 gap-4">
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
             {products.map((product) => (
                 <Link
                     href={`/product/${product.id}`}
