@@ -54,7 +54,7 @@ const NewsLetterForm = () => {
                             </FormItem>
                         )}
                     />
-                    <Button variant={"primary"} className="absolute right-[-20px] top-0 !mt-0 rounded-full px-11 z-50 h-[49px]" type="submit">Subscribe</Button>
+                    <Button variant={"primary"} className="absolute right-[-20px] top-0 !mt-0 rounded-full px-11 z-8 h-[49px]" type="submit">Subscribe</Button>
                 </form>
             </Form>
         </div>

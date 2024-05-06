@@ -6,6 +6,7 @@ import Footer from "@/app/(landing)/_components/Footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import NextTopLoader from "nextjs-toploader";
+import MobileNavbar from "@/app/(landing)/_components/MobileNavbar";
 
 const poppin = Poppins({
     subsets: ["latin"],
@@ -40,6 +41,7 @@ export default async function RootLayout({
                     <Navbar />
                     {children}
                     <Footer />
+                    <MobileNavbar />
                 </body>
             </html>
         </SessionProvider>

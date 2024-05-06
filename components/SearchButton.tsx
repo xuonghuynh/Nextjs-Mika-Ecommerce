@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 
-const SearchButton = () => {
+const SearchButton = ({isMobileNavbar}: {isMobileNavbar?: boolean}) => {
     const [isMounted, setIsMounted] = React.useState(false);
     useEffect(() => {
         setIsMounted(true);
@@ -21,7 +21,14 @@ const SearchButton = () => {
     return (
         <Sheet>
             <SheetTrigger className="p-0 hover:bg-transparent hover:text-amber-900">
-                <Search className="h-[22px] w-[22px]" />
+                {isMobileNavbar ? (
+                    <div className="flex flex-col items-center gap-1">
+                        <Search className="h-[18px] w-[18px]" />
+                        <span className="text-xs uppercase font-medium">
+                            Search
+                        </span>
+                    </div>
+                ) : <Search className="h-[22px] w-[22px]" />}
             </SheetTrigger>
             <SheetContent side={"top"} className="py-20">
                 <div className="mx-auto max-w-[1140px]">
