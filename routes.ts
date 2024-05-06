@@ -3,8 +3,9 @@
 */
 
 export const publicRoutes = [
-    "/",
+    "/product",
     "/about",
+    "/collection",
     "/verify-email",
     "/api/uploadthing"
 ]

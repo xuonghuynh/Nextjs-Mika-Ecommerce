@@ -54,12 +54,12 @@ const ProductShowcase = () => {
                         )}
                     >
                         <div className="w-full md:w-1/2 ">
-                            <motion.div
-                                variants={animateVariants(index)}
-                                initial="initial"
-                                whileHover={{ scale: 1.05 }}
-                                whileInView={"animate"}
-                                viewport={{ once: true }}
+                            <div
+                                // variants={animateVariants(index)}
+                                // initial="initial"
+                                // whileHover={{ scale: 1.05 }}
+                                // whileInView={"animate"}
+                                // viewport={{ once: true }}
                             >
                                 <Image
                                     className={cn(
@@ -71,23 +71,23 @@ const ProductShowcase = () => {
                                     width={500}
                                     height={500}
                                 />
-                            </motion.div>
+                            </div>
                         </div>
-                        <motion.div
+                        <div
                             className={cn(
                                 "flex w-full md:w-1/2 items-center md:px-20",
                                 index % 2 === 0
                                     ? "justify-start"
                                     : "md:justify-end",
                             )}
-                            variants={animateVariants(index)}
-                            initial={
-                                index % 2 === 0
-                                    ? "initialForLeft"
-                                    : "initialForRight"
-                            }
-                            whileInView={"slideDiv"}
-                            viewport={{ once: true }}
+                            // variants={animateVariants(index)}
+                            // initial={
+                            //     index % 2 === 0
+                            //         ? "initialForLeft"
+                            //         : "initialForRight"
+                            // }
+                            // whileInView={"slideDiv"}
+                            // viewport={{ once: true }}
                         >
                             <div className="flex max-w-[350px] flex-col gap-y-3">
                                 <div className="font-medium text-main mt-5 md:mt-0">
@@ -112,7 +112,7 @@ const ProductShowcase = () => {
                                     </Button>
                                 </Link>
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 ))}
             </div>
