@@ -38,7 +38,7 @@ const Menu = ({ collections }: { collections: collectionsType }) => {
             icon: ShoppingBag,
             subMenu: collections.map((collection) => ({
                 name: collection.name,
-                link: `/collection/${collection.id}`,
+                link: `/collections/${collection.id}`,
             })),
         },
         {

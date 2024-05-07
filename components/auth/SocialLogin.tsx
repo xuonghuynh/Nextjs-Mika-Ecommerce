@@ -8,7 +8,6 @@ import { DEFAULT_USER_LOGIN_REDIRECT } from "@/routes";
 
 const SocialLogin = () => {
     const onClick = (provider: "google" | "github") => {
-      console.log('click')
         signIn(provider, {
             callbackUrl: DEFAULT_USER_LOGIN_REDIRECT,
         });

@@ -5,7 +5,7 @@
 export const publicRoutes = [
     "/product",
     "/about",
-    "/collection",
+    "/collections",
     "/verify-email",
     "/api/uploadthing"
 ]

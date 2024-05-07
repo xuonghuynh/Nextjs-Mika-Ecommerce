@@ -12,7 +12,7 @@ const CollectionHeader = ({collection}: CollectionHeaderProps) => {
     const productCount = collection.products.length;
     return (
         <div className="w-full">
-            <div className="text-base font-semibold">
+            <div className="text-base font-semibold text-[#333] font-hind">
                 {collection.name} ({productCount})
             </div>
             <div className=" relative mt-4 h-[100px] md:h-[250px] w-full">

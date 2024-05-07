@@ -17,11 +17,7 @@ export default auth((req) => {
         isPublicRoute = true; // For homepage
     } else {
         isPublicRoute = publicRoutes.some(route => nextUrl.pathname === route || nextUrl.pathname.startsWith(route + '/'));
-    }
-
-    console.log(isPublicRoute);
-    console.log(isLoggedIn);
-    
+    }    
 
     if(isApiAuthRoute) {
         return 

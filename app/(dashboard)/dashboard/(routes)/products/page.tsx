@@ -7,9 +7,8 @@ import WhiteBoxWrapper from "@/components/WhiteBox";
 import React from "react";
 
 const ProductPage = async () => {
+    
     const products = await getProducts();
-
-    console.log(products);
 
     return (
         <div className="p-8">

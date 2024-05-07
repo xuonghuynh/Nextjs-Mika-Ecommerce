@@ -22,7 +22,7 @@ const MobileMenuRoutes = async () => {
             link: "/shop",
             subMenu: collections.map((collection) => ({
                 name: collection.name,
-                link: `/collection/${collection.id}`,
+                link: `/collections/${collection.id}`,
             })),
         },
         {
