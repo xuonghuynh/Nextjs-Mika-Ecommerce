@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Collection } from "@prisma/client";
+import { Collection, Product, ProductImage } from "@prisma/client";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,11 @@ type CollectionFilterItemProps = {
     collectionId?: string;
 };
 
+type ProductProps = {
+    products: Product[];
+};
+type CollectionsProps = Collection & ProductProps;
+
 const CollectionFilterItem = ({ collectionId }: CollectionFilterItemProps) => {
     const router = useRouter();
 
@@ -20,7 +25,7 @@ const CollectionFilterItem = ({ collectionId }: CollectionFilterItemProps) => {
         data: collections,
         error,
         isFetching,
-    } = useQuery<Collection[]>({
+    } = useQuery<any>({
         queryKey: ["collections"],
         queryFn: () => getCollections(),
         staleTime: Infinity,
@@ -33,7 +38,7 @@ const CollectionFilterItem = ({ collectionId }: CollectionFilterItemProps) => {
             </SkeletonWrapper>
         );
 
-    if(error) {
+    if (error) {
         return toast.error("Something went wrong");
     }
     const onHandleChange = (value: string) => {
@@ -44,23 +49,28 @@ const CollectionFilterItem = ({ collectionId }: CollectionFilterItemProps) => {
         <div className="flex items-center justify-between">
             <RadioGroup
                 defaultValue={collectionId}
+                className="flex flex-col gap-y-4 w-full pr-4"
                 onValueChange={(value) => onHandleChange(value)}
             >
-                {collections.map((collection) => (
+                {collections.map((collection: CollectionsProps) => (
                     <div
                         key={collection.id}
-                        className="flex items-center space-x-2"
+                        className="flex items-center justify-between"
                     >
-                        <RadioGroupItem
-                            value={collection.id}
-                            id={collection.id}
-                        />
-                        <Label
-                            className="cursor-pointer"
-                            htmlFor={collection.id}
-                        >
-                            {collection.name}
-                        </Label>
+                        <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                                value={collection.id}
+                                id={collection.id}
+                                asCheckBox
+                            />
+                            <Label
+                                className="w-full cursor-pointer font-normal"
+                                htmlFor={collection.id}
+                            >
+                                {collection.name}
+                            </Label>
+                        </div>
+                        <div className="font-normal text-sm">({collection.products.length})</div>
                     </div>
                 ))}
             </RadioGroup>

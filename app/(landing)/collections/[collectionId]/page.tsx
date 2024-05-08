@@ -30,7 +30,7 @@ const CollectionIdPage = async ({
     });
 
     return (
-        <div className="container mt-10">
+        <div className="container mt-10 min-h-[48vh]">
             <HydrationBoundary state={dehydrate(queryClient)}>
                 <div className="flex h-full gap-4">
                 <CollectionSidebar collectionId={collectionId} />
