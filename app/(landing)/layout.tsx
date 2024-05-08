@@ -7,6 +7,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import NextTopLoader from "nextjs-toploader";
 import MobileNavbar from "@/app/(landing)/_components/MobileNavbar";
+import { ReactQueryProvider } from "@/ultils/providers/ReactQuery";
 
 const poppin = Poppins({
     subsets: ["latin"],
@@ -39,7 +40,7 @@ export default async function RootLayout({
                 <body className={`${poppin.variable} ${hind.variable}`}>
                     <NextTopLoader showSpinner={false} color="#AB8D7A" />
                     <Navbar />
-                    {children}
+                    <ReactQueryProvider>{children}</ReactQueryProvider>
                     <Footer />
                     <MobileNavbar />
                 </body>

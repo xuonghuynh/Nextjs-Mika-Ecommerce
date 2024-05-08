@@ -3,12 +3,39 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import slugify from 'react-slugify';
 
+export async function GET(req: Request, { params }: { params: { collectionId: string } }) {
+    try {
+        const id  = params.collectionId;
+
+        const collection = await db.collection.findUnique({
+            where: {
+                id
+            },
+            include: {
+                products: {
+                    where: {
+                        isPublished: true
+                    },
+                    include: {
+                        images: true
+                    }
+                }
+            }
+        });
+
+        return NextResponse.json(collection, { status: 200 });
+
+    } catch (error) {
+        console.log("COLLECTION_GET", error);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}
 export async function PATCH(req: Request, { params }: { params: { collectionId: string } }) {
     try {
         const user = await getServerCurrentUser();
         const id  = params.collectionId;
 
-        if (!user) {
+        if (!user || user.role !== "ADMIN") {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -39,7 +66,7 @@ export async function DELETE(req: Request, {params}: { params: { collectionId: s
         const user = await getServerCurrentUser();
         const id  = params.collectionId;
 
-        if (!user) {
+        if (!user || user.role !== "ADMIN") {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 

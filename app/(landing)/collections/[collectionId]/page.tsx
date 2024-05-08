@@ -3,6 +3,11 @@ import { getCollections } from "@/actions/get-collections";
 import AllCollectionProduct from "@/app/(landing)/collections/[collectionId]/_components/AllCollectionProduct";
 import CollectionHeader from "@/app/(landing)/collections/[collectionId]/_components/CollectionHeader";
 import CollectionSidebar from "@/app/(landing)/collections/[collectionId]/_components/CollectionSidebar";
+import {
+    HydrationBoundary,
+    QueryClient,
+    dehydrate,
+} from "@tanstack/react-query";
 import React from "react";
 
 const CollectionIdPage = async ({
@@ -11,17 +16,30 @@ const CollectionIdPage = async ({
     params: { collectionId: string };
 }) => {
     const collectionId = params.collectionId;
-    const collection = await getCollectionById(collectionId);
-    if (!collection) return <div>Collection not found</div>;
+    const queryClient = new QueryClient();
+
+    await queryClient.prefetchQuery({
+        queryKey: ["collection"],
+        queryFn: () => getCollectionById(collectionId)
+    });
+
+    await queryClient.prefetchQuery({
+        queryKey: ["collections"],
+        queryFn: () => getCollections(),
+        staleTime: Infinity,
+    });
+
     return (
         <div className="container mt-10">
-            <div className="flex h-full gap-4">
+            <HydrationBoundary state={dehydrate(queryClient)}>
+                <div className="flex h-full gap-4">
                 <CollectionSidebar collectionId={collectionId} />
                 <div className="w-full">
-                    <CollectionHeader collection={collection} />
-                    <AllCollectionProduct collection={collection} />
+                    <CollectionHeader collectionId={collectionId}/>
+                    <AllCollectionProduct />
                 </div>
             </div>
+            </HydrationBoundary>
         </div>
     );
 };
