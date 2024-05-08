@@ -11,24 +11,47 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
+import { useDebounce } from "@/hooks/useDebounce";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import queryString from "query-string";
 
-const SearchButton = ({isMobileNavbar}: {isMobileNavbar?: boolean}) => {
+const SearchButton = ({ isMobileNavbar }: { isMobileNavbar?: boolean }) => {
     const [isMounted, setIsMounted] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const router = useRouter();
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
     if (!isMounted) return null;
+
+    const handleSearch = (searchValue: string) => {
+        const url = queryString.stringifyUrl(
+            {
+                url: "/search",
+                query: {
+                    name: searchValue,
+                },
+            },
+            { skipNull: true, skipEmptyString: true },
+        );
+        router.push(url);
+        setOpen(false);
+    };
+
     return (
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger className="p-0 hover:bg-transparent hover:text-amber-900">
                 {isMobileNavbar ? (
                     <div className="flex flex-col items-center gap-1">
                         <Search className="h-[18px] w-[18px]" />
-                        <span className="text-xs uppercase font-medium">
+                        <span className="text-xs font-medium uppercase">
                             Search
                         </span>
                     </div>
-                ) : <Search className="h-[22px] w-[22px]" />}
+                ) : (
+                    <Search className="h-[22px] w-[22px]" />
+                )}
             </SheetTrigger>
             <SheetContent side={"top"} className="py-20">
                 <div className="mx-auto max-w-[1140px]">
@@ -40,8 +63,13 @@ const SearchButton = ({isMobileNavbar}: {isMobileNavbar?: boolean}) => {
                             <div className="w-full md:flex md:items-center md:justify-center">
                                 <div className="relative">
                                     <Input
-                                        // value={value}
-                                        // onChange={(e) => setValue(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                handleSearch(
+                                                    e.currentTarget.value,
+                                                );
+                                            }
+                                        }}
                                         className="w-full rounded-none pl-9 focus-visible:ring-transparent md:w-[700px]"
                                         type="search"
                                         placeholder="Find our product..."
