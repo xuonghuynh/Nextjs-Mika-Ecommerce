@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import React, { useEffect } from "react";
 import {
@@ -10,34 +9,19 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { useDebounce } from "@/hooks/useDebounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import queryString from "query-string";
+
+import SearchInput from "@/components/SearchInput";
 
 const SearchButton = ({ isMobileNavbar }: { isMobileNavbar?: boolean }) => {
     const [isMounted, setIsMounted] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    const router = useRouter();
+    
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
     if (!isMounted) return null;
-
-    const handleSearch = (searchValue: string) => {
-        const url = queryString.stringifyUrl(
-            {
-                url: "/search",
-                query: {
-                    name: searchValue,
-                },
-            },
-            { skipNull: true, skipEmptyString: true },
-        );
-        router.push(url);
-        setOpen(false);
-    };
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -59,23 +43,9 @@ const SearchButton = ({ isMobileNavbar }: { isMobileNavbar?: boolean }) => {
                         <SheetTitle className="mb-5 text-center text-[28px]">
                             What are you looking for?
                         </SheetTitle>
-                        <SheetDescription>
+                        <SheetDescription asChild>
                             <div className="w-full md:flex md:items-center md:justify-center">
-                                <div className="relative">
-                                    <Input
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleSearch(
-                                                    e.currentTarget.value,
-                                                );
-                                            }
-                                        }}
-                                        className="w-full rounded-none pl-9 focus-visible:ring-transparent md:w-[700px]"
-                                        type="search"
-                                        placeholder="Find our product..."
-                                    />
-                                    <Search className="absolute left-3 top-3 h-4 w-4 text-slate-600" />
-                                </div>
+                                <SearchInput onChange={() => setOpen(false)} />
                             </div>
                         </SheetDescription>
                     </SheetHeader>
