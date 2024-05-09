@@ -13,7 +13,7 @@ const ProductDiscountPercent = ({
     className
 }: ProductDiscountPercentProps) => {
     if (!salePrice || salePrice <= 0) return null;
-    return <div className={`bg-black text-[13px] w-[50px] h-7 text-white flex items-center justify-center ${className}`}>-{calculateDiscountPercentage(price, salePrice).toFixed(0)}%</div>;
+    return <div className={`bg-black text-[13px] w-[50px] h-7 text-white flex items-center justify-center font-semibold ${className}`}>-{calculateDiscountPercentage(price, salePrice).toFixed(0)}%</div>;
 };
 
 export default ProductDiscountPercent;

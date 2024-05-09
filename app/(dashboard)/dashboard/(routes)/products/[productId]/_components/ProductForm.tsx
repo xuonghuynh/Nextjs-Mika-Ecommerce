@@ -29,9 +29,7 @@ import CurrencyInput from "react-currency-input-field";
 import { UpdateProductSchema } from "@/schemas";
 import WhiteBoxWrapper from "@/components/WhiteBox";
 import RequiredMark from "@/components/RequiredMark";
-import { SketchPicker, TwitterPicker } from "react-color";
 import Link from "next/link";
-import ColorPicker from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorPickerPopover";
 import ColorPickerPopover from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorPickerPopover";
 import NumberInput from "@/components/NumberInput";
 

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/ultils/formats";
 import React from "react";
 
@@ -5,13 +6,14 @@ type ProductPriceProps = {
     price: number;
     salePrice?: number | null;
     className?: string | null;
+    position?:string | null
 };
 
-const ProductPrice = ({ price, salePrice, className }: ProductPriceProps) => {
+const ProductPrice = ({ price, salePrice, className, position }: ProductPriceProps) => {
     return (
         <div className={`${className}`}>
             {salePrice && salePrice > 0 ? (
-                <div className="flex items-center justify-center gap-x-2 ">
+                <div className={cn("flex items-center justify-center gap-x-2 ", position && `justify-${position}`)}>
                     <div className="text-base font-semibold">
                         {formatPrice(salePrice)}
                     </div>
@@ -20,7 +22,7 @@ const ProductPrice = ({ price, salePrice, className }: ProductPriceProps) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex items-center justify-center gap-x-2 ">
+                <div className={cn("flex items-center justify-center gap-x-2 ", position && `justify-${position}`)}>
                     <div className="text-base font-semibold">
                         {formatPrice(price)}
                     </div>
