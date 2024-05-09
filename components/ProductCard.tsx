@@ -39,7 +39,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 />
                 <ProductAction
                     className="absolute bottom-2 md:bottom-5 left-1/2 z-[100] -translate-x-1/2 translate-y-0 md:opacity-0 transition-all duration-500 ease-in-out md:group-hover:translate-y-[-10px] md:group-hover:opacity-100"
-                    productId={product.id}
+                    product={product}
                 />
             </CardHeader>
             <CardBody>

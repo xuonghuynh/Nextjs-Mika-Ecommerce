@@ -12,10 +12,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, ShoppingCart } from "lucide-react";
 import EmptyCart from "@/components/EmptyCart";
+import { useCart } from "@/stores/useCart";
+import ProductCartList from "@/components/ProductCartList";
 
 const ShoppingCartButton = () => {
     const [isMounted, setIsMounted] = React.useState(false);
     const [isOpenSheet, setIsOpenSheet] = React.useState(false);
+    const {cartItems} = useCart();
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -30,7 +33,7 @@ const ShoppingCartButton = () => {
             <SheetTrigger className="relative hover:bg-transparent hover:text-amber-900">
                 <ShoppingCart className="h-[22px] w-[22px]" />
                 <span className="absolute left-3 top-[-4px] flex h-4 w-4 items-center justify-center rounded-full bg-main text-xs text-white">
-                    0
+                    {cartItems.length}
                 </span>
             </SheetTrigger>
             <SheetContent side={"right"} className="py-10">
@@ -42,7 +45,7 @@ const ShoppingCartButton = () => {
                             </div>
                         </SheetTitle>
                         <SheetDescription className="h-full">
-                            <EmptyCart closeCart={closeCart} />
+                            <ProductCartList closeCart={closeCart} />
                         </SheetDescription>
                     </SheetHeader>
                 </div>

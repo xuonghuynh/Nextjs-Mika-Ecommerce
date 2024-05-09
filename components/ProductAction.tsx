@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import {
     Tooltip,
@@ -9,20 +10,29 @@ import { Button } from "@/components/ui/button";
 import { Eye, Heart, ShoppingBag } from "lucide-react";
 import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { useRouter } from "next/navigation";
+import { Product, ProductImage } from "@prisma/client";
+import { useCart } from "@/stores/useCart";
 
 type ProductActionProps = {
     className?: string;
-    productId: string;
+    product: Product & ({ images: ProductImage[] });
 }
 
-const ProductAction = ({ className, productId }: ProductActionProps) => {
+const ProductAction = ({ className, product }: ProductActionProps) => {
     const router = useRouter();
+    const {addToCart} = useCart();
+
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: Product & ({ images: ProductImage[] })) => {
+        e.preventDefault();
+        addToCart(product);
+    }
+
     return (
         <div className={`flex items-center gap-x-2 justify-center ${className}`}>
             <TooltipProvider delayDuration={300}>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"}>
+                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"} onClick={(e) => handleAddToCart(e, product)}>
                             <ShoppingBag className="h-3 w-3 md:h-4 md:w-4" />
                         </Button>
                     </TooltipTrigger>
@@ -34,7 +44,7 @@ const ProductAction = ({ className, productId }: ProductActionProps) => {
             <TooltipProvider delayDuration={300}>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"} onClick={() => router.push(`/product/${productId}`)}>
+                        <Button className="rounded-full h-8 w-8 md:h-10 md:w-10 p-0" variant={"primaryOrange"} onClick={() => router.push(`/product/${product.id}`)}>
                             <Eye className="h-3 w-3 md:h-4 md:w-4" />
                         </Button>
                     </TooltipTrigger>
