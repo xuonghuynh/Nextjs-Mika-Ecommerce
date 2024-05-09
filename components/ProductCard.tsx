@@ -8,6 +8,7 @@ import "@smastrom/react-rating/style.css";
 import ProductAction from "@/components/ProductAction";
 import ProductPrice from "@/components/ProductPrice";
 import ProductDiscountPercent from "@/components/ProductDiscountPercent";
+import ProductRating from "@/components/ProductRating";
 
 type ProductCardProps = {
     product: Product & { images: ProductImage[] };
@@ -43,14 +44,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </CardHeader>
             <CardBody>
                 <div className="flex flex-col gap-y-2">
-                    <Rating
+                    <ProductRating
                         className="m-auto"
-                        itemStyles={{
-                            itemShapes: ThinRoundedStar,
-                            activeFillColor: "#f59e0b",
-                            inactiveFillColor: "#CCCCCC",
-                        }}
-                        style={{ maxWidth: 80 }}
                         value={rating}
                         onChange={setRating}
                     />
