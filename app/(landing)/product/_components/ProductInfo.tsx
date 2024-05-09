@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, ShoppingBag } from "lucide-react";
 import NumberInput from "@/components/NumberInput";
 import ProductRating from "@/components/ProductRating";
+import ReturnDialog from "@/app/(landing)/_components/ReturnDialog";
 
 type ProductInfoProps = {
     product: (Product & { images: ProductImage[] }) | null;
@@ -93,7 +94,10 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
                 <div className="font-hind text-base font-bold">Quantity:</div>
                 <NumberInput value={1} onChange={() => {}} />
             </div>
-            <div className="mt-10 flex items-center gap-4">
+            <div>
+                <ReturnDialog />
+            </div>
+            <div className="flex items-center gap-4">
                 <Button
                     className="rounded-full px-20 py-7"
                     variant="primaryOrange"
@@ -104,6 +108,9 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
                     <Heart className="mr-2 h-4 w-4" />
                     Add Wishlist
                 </Button>
+            </div>
+            <div className="text-sm">
+                🚚 Item will be delivered on or before May 19 2024
             </div>
         </div>
     );
