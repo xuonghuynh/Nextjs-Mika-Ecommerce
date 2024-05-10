@@ -3,12 +3,15 @@ import toast from "react-hot-toast";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-type ProductWithImages = Product & ({ images: ProductImage[] });
+type ProductWithImages = Product & { images: ProductImage[] } & {
+    quantity: number;
+    selectedColor?: string;
+};
 
 type CartStoreProps = {
     cartItems: ProductWithImages[];
     addToCart: (product: ProductWithImages) => void;
-    removeFromCart: (product: Product) => void;
+    removeCartItem: (product: Product) => void;
     clearCart: () => void;
 };
 
@@ -20,29 +23,30 @@ export const useCart = create<CartStoreProps>()(
                 addToCart: (product: ProductWithImages) => {
                     const currentCartItems = get().cartItems;
                     const existingItem = currentCartItems.find(
-                        (item) => item.id === product.id
-                    )
-                    if(existingItem) {
+                        (item) => item.id === product.id,
+                    );
+                    if (existingItem) {
                         toast.error("Product already in cart");
-                        return
+                        return;
                     }
                     set((state) => ({
                         cartItems: [...state.cartItems, product],
                     }));
                     toast.success("Product added to cart");
                 },
-                removeFromCart: (product: Product) => {
+                removeCartItem: (product: Product) => {
                     set((state) => ({
                         cartItems: state.cartItems.filter(
-                            (item) => item.id !== product.id
+                            (item) => item.id !== product.id,
                         ),
                     }));
+                    toast.success("Product removed from cart");
                 },
                 clearCart: () => {
                     set((state) => ({
                         cartItems: [],
                     }));
-                }
+                },
             }),
             { name: "collection-storage" },
         ),

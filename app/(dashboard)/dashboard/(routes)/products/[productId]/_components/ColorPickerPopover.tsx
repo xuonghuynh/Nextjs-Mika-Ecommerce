@@ -16,6 +16,7 @@ type PickerProps = {
 const ColorPickerPopover = ({onChange}: PickerProps) => {
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState("#000000");
+    const colors = ["#000000", "#83878A", "#F0EADE", "#D2E4F2", "#EEF5EE", "#0ea5e9", "#a855f7", "#f43f5e", "#16a34a", "#facc15"];
     const handleOnChange = (color: any) => {
         setColor(color);
     };
@@ -33,7 +34,7 @@ const ColorPickerPopover = ({onChange}: PickerProps) => {
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-80" side="top" sideOffset={5}>
-                <ColorRadioPicker onChange={handleOnChange} />
+                <ColorRadioPicker colors={colors} onChange={handleOnChange} />
                 <Button
                     className="mt-4"
                     variant="outline"

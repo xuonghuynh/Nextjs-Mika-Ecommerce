@@ -5,7 +5,7 @@ import Navbar from "@/app/(landing)/_components/Navbar";
 import Footer from "@/app/(landing)/_components/Footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import NextTopLoader from "nextjs-toploader";
+import HolyLoader from "holy-loader";
 import MobileNavbar from "@/app/(landing)/_components/MobileNavbar";
 import { ReactQueryProvider } from "@/ultils/providers/ReactQuery";
 import { Toaster } from "react-hot-toast";
@@ -40,7 +40,7 @@ export default async function RootLayout({
             <html lang="en">
                 <body className={`${poppin.variable} ${hind.variable}`}>
                     <Toaster position="top-center" />
-                    <NextTopLoader showSpinner={false} color="#AB8D7A" />
+                    <HolyLoader color="#AB8D7A" />
                     <Navbar />
                     <ReactQueryProvider>{children}</ReactQueryProvider>
                     <Footer />

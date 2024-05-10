@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Eye, Heart, ShoppingBag } from "lucide-react";
-import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { useRouter } from "next/navigation";
 import { Product, ProductImage } from "@prisma/client";
 import { useCart } from "@/stores/useCart";
@@ -22,9 +21,15 @@ const ProductAction = ({ className, product }: ProductActionProps) => {
     const router = useRouter();
     const {addToCart} = useCart();
 
-    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: Product & ({ images: ProductImage[] })) => {
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: Product & ({ images: ProductImage[], quantity?: number })) => {
         e.preventDefault();
-        addToCart(product);
+        e.nativeEvent.stopImmediatePropagation();
+        const data = {
+            ...product,
+            selectedColor: product.colors && product.colors[0],
+            quantity: 1,
+        }
+        addToCart(data);
     }
 
     return (

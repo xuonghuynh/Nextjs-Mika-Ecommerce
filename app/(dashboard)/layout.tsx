@@ -8,7 +8,7 @@ import Sidebar from "@/app/(dashboard)/_components/SideBar";
 import "@/app/globals.css";
 import "@uploadthing/react/styles.css";
 import { Toaster } from "react-hot-toast";
-import NextTopLoader from "nextjs-toploader";
+import HolyLoader from "holy-loader";
 import { NextUIProvider } from "@nextui-org/system";
 
 export const metadata = {
@@ -31,7 +31,7 @@ export default async function RootLayout({
             <html lang="en">
                 <body>
                     <Toaster position="top-center" />
-                    <NextTopLoader showSpinner={false} color="#AB8D7A" />
+                    <HolyLoader color="#AB8D7A" />
                     <div className="h-full">
                         <div className="fixed inset-y-0 h-[80px] w-full bg-white md:pl-56">
                             <Navbar />

@@ -16,13 +16,20 @@ import { Heart, ShoppingBag } from "lucide-react";
 import NumberInput from "@/components/NumberInput";
 import ProductRating from "@/components/ProductRating";
 import ReturnDialog from "@/app/(landing)/_components/ReturnDialog";
+import { useCart } from "@/stores/useCart";
+import ColorRadioPicker from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorRadioPicker";
 
 type ProductInfoProps = {
     product: (Product & { images: ProductImage[] }) | null;
 };
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
+    const [quantity, setQuantity] = React.useState(1);
+    const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
+    const { addToCart } = useCart();
+
     if (!product) return null;
+
     const description = generateHTML(JSON.parse(product.description!), [
         Document,
         Paragraph,
@@ -31,6 +38,22 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         ListItem,
         BulletList,
     ]);
+
+    const handleAddToCart = (product: any) => {
+        const productAdd = { 
+            ...product, 
+            quantity,
+            selectedColor
+        };
+        console.log(productAdd);
+        addToCart(productAdd);
+    };
+
+    const handleSelectColor = (color: string) => {
+        console.log(color);
+        setSelectedColor(color);
+    };
+
     return (
         <div className="flex flex-col gap-y-6">
             <div className="text-3xl font-bold">{product.name}</div>
@@ -77,22 +100,14 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
                 <div className="description">{parse(description)}</div>
             </div>
             {product.colors.length > 0 && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-x-4">
                     <div className="font-hind text-base font-bold">Colors:</div>
-                    {product.colors.map((color, index) => (
-                        <div
-                            key={index}
-                            className="group relative h-6 w-6 rounded-full"
-                            style={{
-                                backgroundColor: color,
-                            }}
-                        ></div>
-                    ))}
+                    <ColorRadioPicker colors={product.colors} onChange={handleSelectColor} isTitle={false} size="h-6 w-6" />
                 </div>
             )}
             <div className="flex items-center gap-x-4">
                 <div className="font-hind text-base font-bold">Quantity:</div>
-                <NumberInput value={1} onChange={() => {}} />
+                <NumberInput value={quantity} onChange={(value) => setQuantity(value)} />
             </div>
             <div>
                 <ReturnDialog />
@@ -101,6 +116,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
                 <Button
                     className="rounded-full px-20 py-7"
                     variant="primaryOrange"
+                    onClick={() => handleAddToCart(product)}
                 >
                     <ShoppingBag className="mr-2 h-4 w-4" /> Add to cart
                 </Button>

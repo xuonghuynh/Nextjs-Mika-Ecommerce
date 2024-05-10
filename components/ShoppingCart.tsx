@@ -44,9 +44,9 @@ const ShoppingCartButton = () => {
                                 My shopping cart
                             </div>
                         </SheetTitle>
-                        <SheetDescription className="h-full">
+                        <div className="h-full">
                             <ProductCartList closeCart={closeCart} />
-                        </SheetDescription>
+                        </div>
                     </SheetHeader>
                 </div>
             </SheetContent>

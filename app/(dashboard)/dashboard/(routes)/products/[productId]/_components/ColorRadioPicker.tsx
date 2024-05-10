@@ -1,25 +1,29 @@
 import React from "react";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 import CustomRadio from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/CustomRadio";
+import { cn } from "@/lib/utils";
 
-const colors = ["#000000", "#83878A", "#F0EADE", "#D2E4F2", "#EEF5EE", "#0ea5e9", "#a855f7", "#f43f5e", "#16a34a", "#facc15"];
+
 
 type ColorRadioPickerProps = {
+    colors: string[];
+    isTitle?: boolean;
+    size?: string;
     onChange: (value: string) => void;
 };
 
 
 
-const ColorRadioPicker = ({onChange}: ColorRadioPickerProps) => {
+const ColorRadioPicker = ({colors, onChange, isTitle, size}: ColorRadioPickerProps) => {
     const handleValue = (value: string) => {
         onChange(value);
     }
     return (
-        <RadioGroup label="Select product color" orientation="horizontal" onChange={(value) => handleValue(value.target.value)}>
+        <RadioGroup label={isTitle ? "Select product color" : ""} orientation="horizontal" onChange={(value) => handleValue(value.target.value)}>
             <div className="flex flex-wrap gap-3">
                 {colors.map((color, index) => (
                     <CustomRadio key={index} value={color}>
-                        <div style={{ backgroundColor: color }} className="w-8 h-8 rounded-full"></div>
+                        <div style={{ backgroundColor: color }} className={cn("w-8 h-8 rounded-full", size)}></div>
                     </CustomRadio>
                 ))}
             </div>
