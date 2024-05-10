@@ -15,23 +15,27 @@ type Props = {
 };
 
 const ProductCartList = ({ closeCart }: Props) => {
-    const { cartItems, removeCartItem } = useCart();
+    const { cartItems, removeCartItem, updateQuantity } = useCart();
     console.log(cartItems);
+
     if (cartItems.length === 0)
         return <EmptyCart closeCart={() => closeCart()} />;
+
     return (
         <div>
             {cartItems.map((product) => (
-                <div key={product.id}>
+                <div key={product.id} className="border-b last:border-none">
                     <div className="flex items-center justify-between gap-4 py-4">
                         <div className="flex gap-4">
-                            <div className="flex h-[95px] w-[80px] items-center justify-center bg-[#F9F5F2]  ">
-                                <Image
-                                    src={product.images[0].imageUrl}
-                                    alt={product.name}
-                                    width={80}
-                                    height={80}
-                                />
+                            <div className="border p-[2px] h-[95px] w-[80px]">
+                                <div className="flex items-center justify-center bg-[#F9F5F2] h-full w-full">
+                                    <Image
+                                        src={product.images[0].imageUrl}
+                                        alt={product.name}
+                                        width={80}
+                                        height={80}
+                                    />
+                                </div>
                             </div>
                             <div className="flex flex-col gap-y-2">
                                 <Link
@@ -65,7 +69,7 @@ const ProductCartList = ({ closeCart }: Props) => {
                                 <div className="flex items-center gap-x-2">
                                     <NumberInput
                                         value={product.quantity!}
-                                        onChange={() => {}}
+                                        onChange={(value) => updateQuantity(product, value)}
                                     />
                                     <Button
                                         variant={"ghost"}

@@ -3,22 +3,18 @@ import React, { useEffect } from "react";
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
-    SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, ShoppingCart } from "lucide-react";
-import EmptyCart from "@/components/EmptyCart";
+import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/stores/useCart";
 import ProductCartList from "@/components/ProductCartList";
+import ProductCartFooter from "@/components/ProductCartFooter";
 
 const ShoppingCartButton = () => {
     const [isMounted, setIsMounted] = React.useState(false);
     const [isOpenSheet, setIsOpenSheet] = React.useState(false);
-    const {cartItems} = useCart();
+    const { cartItems } = useCart();
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -36,16 +32,17 @@ const ShoppingCartButton = () => {
                     {cartItems.length}
                 </span>
             </SheetTrigger>
-            <SheetContent side={"right"} className="py-10">
+            <SheetContent side={"right"} className="py-8 max-w-[90%] w-[450px] md:max-w-4xl">
                 <div className="mx-auto h-full max-w-[1140px]">
                     <SheetHeader className="h-full">
-                        <SheetTitle className="border-b-[1px] pb-4">
-                            <div className="font-hind text-[18px] font-semibold text-[#333]">
-                                My shopping cart
-                            </div>
-                        </SheetTitle>
-                        <div className="h-full">
+                        <div className="font-hind text-[18px] font-semibold text-[#333] border-b pb-4">
+                            My shopping cart
+                        </div>
+                        <div className="h-full overflow-auto">
                             <ProductCartList closeCart={closeCart} />
+                        </div>
+                        <div>
+                            <ProductCartFooter />
                         </div>
                     </SheetHeader>
                 </div>

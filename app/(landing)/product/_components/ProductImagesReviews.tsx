@@ -14,8 +14,8 @@ const ProductImagesReviews = ({ product }: ProductImagesProps) => {
     );
     if (!product) return null;
     return (
-        <div className="pr-20">
-            <div className="flex h-[600px] items-center justify-center border border-slate-800/10 bg-[#F9F5F2] rounded-md">
+        <div className="md:pr-20">
+            <div className="flex md:h-[600px] items-center justify-center border border-slate-800/10 bg-[#F9F5F2] rounded-md">
                 <Image
                     src={mainImage}
                     alt={product?.name}

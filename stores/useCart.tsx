@@ -10,8 +10,11 @@ type ProductWithImages = Product & { images: ProductImage[] } & {
 
 type CartStoreProps = {
     cartItems: ProductWithImages[];
+    orderInstruction: string;
     addToCart: (product: ProductWithImages) => void;
     removeCartItem: (product: Product) => void;
+    updateQuantity: (product: Product, quantity: number) => void;
+    addOrderInstruction: (instruction: string) => void;
     clearCart: () => void;
 };
 
@@ -20,6 +23,7 @@ export const useCart = create<CartStoreProps>()(
         persist(
             (set, get) => ({
                 cartItems: [],
+                orderInstruction: "",
                 addToCart: (product: ProductWithImages) => {
                     const currentCartItems = get().cartItems;
                     const existingItem = currentCartItems.find(
@@ -42,11 +46,25 @@ export const useCart = create<CartStoreProps>()(
                     }));
                     toast.success("Product removed from cart");
                 },
+                updateQuantity: (product: Product, quantity: number) => {
+                    set((state) => ({
+                        cartItems: state.cartItems.map((item) =>
+                            item.id === product.id
+                                ? { ...item, quantity }
+                                : item
+                        ),
+                    }));
+                },
                 clearCart: () => {
                     set((state) => ({
                         cartItems: [],
                     }));
                 },
+                addOrderInstruction: (instruction: string) => {
+                    set((state) => ({
+                        orderInstruction: instruction,
+                    }));
+                }
             }),
             { name: "collection-storage" },
         ),

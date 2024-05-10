@@ -45,12 +45,10 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
             quantity,
             selectedColor
         };
-        console.log(productAdd);
         addToCart(productAdd);
     };
 
     const handleSelectColor = (color: string) => {
-        console.log(color);
         setSelectedColor(color);
     };
 
@@ -112,7 +110,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
             <div>
                 <ReturnDialog />
             </div>
-            <div className="flex items-center gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Button
                     className="rounded-full px-20 py-7"
                     variant="primaryOrange"
