@@ -9,6 +9,7 @@ export const publicRoutes = [
     "/verify-email",
     "/api/uploadthing",
     "/api/collection",
+    "/api/webhook",
     "/search",
     "/cart",
 ]

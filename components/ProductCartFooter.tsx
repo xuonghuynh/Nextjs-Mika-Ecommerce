@@ -12,9 +12,13 @@ import {
 
 import React from "react";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import toast from "react-hot-toast";
 
 const ProductCartFooter = () => {
     const router = useRouter();
+    const user = useCurrentUser();
     const [acceptTerms, setAcceptTerms] = React.useState(false);
     const { cartItems, orderInstruction, addOrderInstruction } = useCart();
 
@@ -30,6 +34,23 @@ const ProductCartFooter = () => {
             totalPrice += product.price * product.quantity;
         }
     });
+
+    const handleCheckout = async() => {
+        try {
+            if(!user) {
+                toast.error('Please login first')
+                return router.push('/login')
+            }
+            const response = await axios.post("/api/checkout", {
+                cartItems,
+                customer: user,
+            })
+            router.push(response.data.url)
+            console.log(response)
+        } catch (error) {
+            console.log("CheckOut Error: ",error)
+        }
+    };
 
     return (
         <div className="mt-10">
@@ -88,6 +109,7 @@ const ProductCartFooter = () => {
                 </Button>
                 <Button
                     disabled={!acceptTerms}
+                    onClick={() => handleCheckout()}
                     className="rounded-full px-20 py-6"
                 >
                     Check out

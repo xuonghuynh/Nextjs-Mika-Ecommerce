@@ -27,6 +27,7 @@ model User {
   role          UserRole  @default(CUSTOMER)
   image         String?
   accounts      Account[]
+  orders        Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -100,6 +101,7 @@ model Product {
   collections    Collection[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
+  orders         OrderProduct[]
 }
 
 model ProductImage {
@@ -111,4 +113,47 @@ model ProductImage {
   Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
+}
+
+model Order {
+  id              String            @id @default(cuid())
+  User            User              @relation(fields: [userId], references: [id])
+  userId          String
+  customerId      String?
+  customerName    String?
+  customerEmail   String?
+  products        OrderProduct[]
+  shippingAddress ShippingAddress[]
+  totalAmount     Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderProduct {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  color     String?
+  quantity  Int?
+  orderId   String?
+  order     Order?  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ShippingAddress {
+  id           String  @id @default(cuid())
+  addressLine1 String?
+  addressLine2 String?
+  city         String?
+  state        String?
+  country      String?
+  postalCode   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String?
 }
