@@ -5,7 +5,7 @@ import Stripe from "stripe";
 
 export async function POST(request: Request) {
     try {
-        const { cartItems, customer } = await request.json();
+        const { cartItems, orderInstruction, customer } = await request.json();
 
         if (!cartItems || !customer) {
             return new NextResponse("Not enough data to checkout", {
@@ -43,6 +43,7 @@ export async function POST(request: Request) {
             cancel_url: `${process.env.PUBLIC_URL}/cart`,
             metadata: {
                 customer_id: customer.id,
+                instruction: orderInstruction
             },
         });
 

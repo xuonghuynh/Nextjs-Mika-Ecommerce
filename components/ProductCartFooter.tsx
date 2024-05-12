@@ -43,6 +43,7 @@ const ProductCartFooter = () => {
             }
             const response = await axios.post("/api/checkout", {
                 cartItems,
+                orderInstruction,
                 customer: user,
             })
             router.push(response.data.url)

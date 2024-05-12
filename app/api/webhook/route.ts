@@ -65,6 +65,8 @@ export async function POST(request: Request) {
             return new NextResponse("Missing shipping address or order items", { status: 400 })
         }
 
+        console.log(session)
+
         await db.order.create({
             data: {
                 customerId: customerInfo.id,
@@ -78,6 +80,7 @@ export async function POST(request: Request) {
                     create: shippingAddress
                 },
                 totalAmount: session.amount_total ? session.amount_total / 100 : 0,
+                orderInstruction: session.metadata?.instruction || null
             }
         })
     } else {

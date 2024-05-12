@@ -116,15 +116,16 @@ model ProductImage {
 }
 
 model Order {
-  id              String            @id @default(cuid())
-  User            User              @relation(fields: [userId], references: [id])
-  userId          String
-  customerId      String?
-  customerName    String?
-  customerEmail   String?
-  products        OrderProduct[]
-  shippingAddress ShippingAddress[]
-  totalAmount     Float
+  id               String            @id @default(nanoid(9))
+  User             User              @relation(fields: [userId], references: [id])
+  userId           String
+  customerId       String?
+  customerName     String?
+  customerEmail    String?
+  orderInstruction String?
+  products         OrderProduct[]
+  shippingAddress  ShippingAddress[]
+  totalAmount      Float
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
