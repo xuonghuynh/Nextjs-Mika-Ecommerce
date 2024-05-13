@@ -82,15 +82,16 @@ const ProductCartFooter = () => {
                 </div>
             </div>
             <div className="mb-5">
-                <div className="flex items-center space-x-2">
+                <div className="flex space-x-2">
                     <Checkbox
                         id="terms"
+                        className="mt-1"
                         checked={acceptTerms}
                         onCheckedChange={() => setAcceptTerms(!acceptTerms)}
                     />
                     <label
                         htmlFor="terms"
-                        className="cursor-pointer text-sm font-normal"
+                        className="cursor-pointer text-sm font-normal text-start"
                     >
                         I have read and agree with the{" "}
                         <span className="cursor-pointer text-sm underline hover:text-main">
@@ -100,7 +101,7 @@ const ProductCartFooter = () => {
                     </label>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-x-2 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <Button
                     variant={"primaryOrange"}
                     className="rounded-full px-20 py-6"

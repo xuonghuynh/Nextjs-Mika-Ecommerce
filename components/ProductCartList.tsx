@@ -42,7 +42,7 @@ const ProductCartList = ({ closeCart }: Props) => {
                                     href={`/product/${product.id}`}
                                     onClick={() => closeCart()}
                                 >
-                                    <div className="text-sm font-normal text-slate-800 hover:text-main">
+                                    <div className="text-sm font-normal text-slate-800 hover:text-main text-start">
                                         {product.name}
                                     </div>
                                 </Link>

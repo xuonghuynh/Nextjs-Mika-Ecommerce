@@ -39,7 +39,7 @@ export async function POST(request: Request) {
                 quantity: item.quantity,
             })),
             client_reference_id: customer.id,
-            success_url: `${process.env.PUBLIC_URL}/`,
+            success_url: `${process.env.PUBLIC_URL}/checkout/success`,
             cancel_url: `${process.env.PUBLIC_URL}/cart`,
             metadata: {
                 customer_id: customer.id,
