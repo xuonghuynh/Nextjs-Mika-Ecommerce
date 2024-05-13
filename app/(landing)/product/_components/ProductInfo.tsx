@@ -18,6 +18,8 @@ import ProductRating from "@/components/ProductRating";
 import ReturnDialog from "@/app/(landing)/_components/ReturnDialog";
 import { useCart } from "@/stores/useCart";
 import ColorRadioPicker from "@/app/(dashboard)/dashboard/(routes)/products/[productId]/_components/ColorRadioPicker";
+import { useWishlist } from "@/stores/useWishList";
+import { FaHeart } from "react-icons/fa";
 
 type ProductInfoProps = {
     product: (Product & { images: ProductImage[] }) | null;
@@ -25,10 +27,17 @@ type ProductInfoProps = {
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
     const [quantity, setQuantity] = React.useState(1);
-    const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
+    const [selectedColor, setSelectedColor] = React.useState<string | null>(
+        null,
+    );
     const { addToCart } = useCart();
+    const { wishlistItems, addToWishList } = useWishlist();
 
     if (!product) return null;
+
+    const isProductInWishlist = wishlistItems.some(
+        (item) => item.id === product.id,
+    );
 
     const description = generateHTML(JSON.parse(product.description!), [
         Document,
@@ -40,10 +49,10 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
     ]);
 
     const handleAddToCart = (product: any) => {
-        const productAdd = { 
-            ...product, 
+        const productAdd = {
+            ...product,
             quantity,
-            selectedColor
+            selectedColor,
         };
         addToCart(productAdd);
     };
@@ -55,7 +64,9 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
     return (
         <div className="flex flex-col gap-y-6">
             <div className="text-3xl font-bold">{product.name}</div>
-            <div><ProductRating value={0} onChange={() => null} /></div>
+            <div>
+                <ProductRating value={0} onChange={() => null} />
+            </div>
             <div className="flex items-center gap-2">
                 <ProductPrice
                     price={product.price}
@@ -100,17 +111,25 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
             {product.colors.length > 0 && (
                 <div className="flex items-center gap-x-4">
                     <div className="font-hind text-base font-bold">Colors:</div>
-                    <ColorRadioPicker colors={product.colors} onChange={handleSelectColor} isTitle={false} size="h-6 w-6" />
+                    <ColorRadioPicker
+                        colors={product.colors}
+                        onChange={handleSelectColor}
+                        isTitle={false}
+                        size="h-6 w-6"
+                    />
                 </div>
             )}
             <div className="flex items-center gap-x-4">
                 <div className="font-hind text-base font-bold">Quantity:</div>
-                <NumberInput value={quantity} onChange={(value) => setQuantity(value)} />
+                <NumberInput
+                    value={quantity}
+                    onChange={(value) => setQuantity(value)}
+                />
             </div>
             <div>
                 <ReturnDialog />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <Button
                     className="rounded-full px-20 py-7"
                     variant="primaryOrange"
@@ -118,9 +137,27 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
                 >
                     <ShoppingBag className="mr-2 h-4 w-4" /> Add to cart
                 </Button>
-                <Button className="rounded-full px-20 py-7">
-                    <Heart className="mr-2 h-4 w-4" />
-                    Add Wishlist
+                <Button
+                    className="rounded-full px-20 py-7"
+                    onClick={() => addToWishList(product)}
+                >
+                    {isProductInWishlist ? (
+                        <div className="flex items-center gap-2">
+                            <FaHeart
+                                className="text-primaryOrange h-3 w-3 md:h-4 md:w-4"
+                                key={product.id}
+                            />
+                            <span>Remove from wishlist</span>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2">
+                            <Heart
+                                key={product.id}
+                                className="h-3 w-3 md:h-4 md:w-4"
+                            />
+                            <span>Add to wishlist</span>
+                        </div>
+                    )}
                 </Button>
             </div>
             <div className="text-sm">

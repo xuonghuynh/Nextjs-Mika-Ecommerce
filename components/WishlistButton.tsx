@@ -1,9 +1,12 @@
+'use client';
 import { cn } from "@/lib/utils";
+import { useWishlist } from "@/stores/useWishList";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const WishlistButton = ({ isMobileNavbar }: { isMobileNavbar?: boolean }) => {
+    const { wishlistItems } = useWishlist();
     return (
         <Link
             href="/wishlist"
@@ -20,8 +23,13 @@ const WishlistButton = ({ isMobileNavbar }: { isMobileNavbar?: boolean }) => {
                 <Heart className="h-[22px] w-[22px]" />
             )}
 
-            <span className={cn("absolute left-3 top-[-4px] flex h-4 w-4 items-center justify-center rounded-full bg-main text-xs text-white", isMobileNavbar && "left-[29px]")}>
-                0
+            <span
+                className={cn(
+                    "absolute left-3 top-[-4px] flex h-4 w-4 items-center justify-center rounded-full bg-main text-xs text-white",
+                    isMobileNavbar && "left-[29px]",
+                )}
+            >
+                {wishlistItems.length}
             </span>
         </Link>
     );
