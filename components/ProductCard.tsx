@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             key={product.id}
             className=" rounded-none border-none shadow-none"
         >
-            <CardHeader className="relative h-[200px] md:h-[300px] bg-[#F9F5F2]">
+            <CardHeader className="relative h-[200px] md:h-[300px] bg-[#F9F5F2] z-0">
                 <ProductDiscountPercent className={"absolute top-0 right-0"} price={product.price} salePrice={product.compareAtPrice} />
                 <Image
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out group-hover:opacity-0"

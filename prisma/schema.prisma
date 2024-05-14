@@ -126,6 +126,8 @@ model Order {
   products         OrderProduct[]
   shippingAddress  ShippingAddress[]
   totalAmount      Float
+  status           String
+  shippingCost     Float?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
