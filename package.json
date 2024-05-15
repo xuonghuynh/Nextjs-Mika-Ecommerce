@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.6.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.3.4",
+    "@mui/material": "^6.0.0-alpha.6",
     "@nextui-org/avatar": "^2.0.27",
     "@nextui-org/button": "^2.0.31",
     "@nextui-org/card": "^2.0.28",
