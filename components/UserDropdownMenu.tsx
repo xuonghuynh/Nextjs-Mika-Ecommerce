@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { LayoutDashboard, UserCheck } from "lucide-react";
+import { LayoutDashboard, Package, UserCheck } from "lucide-react";
 import { ClipboardList, LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import {
@@ -34,7 +34,14 @@ const UserDropdownMenu = () => {
                         </DropdownMenuItem>
                     </Link>
                 )}
-
+                <Link href="/orders">
+                    <DropdownMenuItem>
+                        <div className="flex cursor-pointer items-center">
+                            <Package className="mr-2 h-4 w-4" />
+                            Orders
+                        </div>
+                    </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem>
                     <div
                         className="flex cursor-pointer items-center"

@@ -126,7 +126,8 @@ model Order {
   products         OrderProduct[]
   shippingAddress  ShippingAddress[]
   totalAmount      Float
-  status           String
+  paymentStatus    String            
+  status           String            @default("unfulfilled")
   shippingCost     Float?
 
   createdAt DateTime @default(now())
