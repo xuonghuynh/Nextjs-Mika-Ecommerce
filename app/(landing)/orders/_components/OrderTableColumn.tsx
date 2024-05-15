@@ -3,13 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-
-import { Account, Product } from "@prisma/client";
 import RowAction from "@/app/(dashboard)/dashboard/(routes)/collections/_components/RowAction";
-import { formatDate, formatPrice, formatServerDate } from "@/ultils/formats";
+import { formatPrice, formatServerDate } from "@/ultils/formats";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import PaymentBadge from "@/components/PaymentStatusBadge";
+import OrderStatusBadge from "@/components/OrderStatusBadge";
 
 type CollumnsProps = {
     id: string;
@@ -28,12 +27,8 @@ export const OrderColumns: ColumnDef<CollumnsProps>[] = [
                 <Button
                     className="p-0 hover:bg-transparent"
                     variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === "asc")
-                    }
                 >
                     ID
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
@@ -129,7 +124,7 @@ export const OrderColumns: ColumnDef<CollumnsProps>[] = [
         },
         cell: ({ row }) => {
             return (
-                <div className="capitalize">{row.original.paymentStatus}</div>
+                <PaymentBadge status={row.original.paymentStatus} />
             );
         },
     },
@@ -151,7 +146,7 @@ export const OrderColumns: ColumnDef<CollumnsProps>[] = [
         },
         cell: ({ row }) => {
             return (
-                <div className="capitalize">{row.original.status}</div>
+                <OrderStatusBadge status={row.original.status} />
             );
         },
     },

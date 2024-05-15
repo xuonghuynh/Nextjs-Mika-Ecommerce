@@ -80,6 +80,7 @@ export async function POST(request: Request) {
                     create: shippingAddress
                 },
                 paymentStatus: session.payment_status || null,
+                status: "processing",
                 shippingCost: session.shipping_cost?.amount_subtotal || 0,
                 totalAmount: session.amount_total ? session.amount_total / 100 : 0,
                 orderInstruction: session.metadata?.instruction || null
