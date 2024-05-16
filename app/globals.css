@@ -95,3 +95,34 @@
 .ql-editor {
     height: 200px !important;
 }
+
+.rs-steps-vertical {
+    & .rs-steps-item-title {
+        width: 100%;
+    }
+    & .rs-steps-item-tail {
+        border-left-style: dashed !important;
+    }
+    & .rs-steps-item-status-finish {
+        & .rs-steps-item-tail {
+            @apply border-main
+        }
+    }
+    & .rs-steps-item-active,
+    & .rs-steps-item-status-finish {
+        & .rs-steps-item-custom-icon {
+            & .rs-steps-item-icon {
+                @apply bg-main text-white flex items-center justify-center rounded-full;
+            }
+        }
+    }
+    & .rs-steps-item-custom-icon {
+        @apply flex items-center justify-center;
+        & .rs-steps-item-icon {
+            height: 20px;
+            width: 20px;
+            @apply bg-gray-300 text-white flex items-center justify-center rounded-full;
+        }
+        
+    }
+}

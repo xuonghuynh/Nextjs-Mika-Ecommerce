@@ -9,9 +9,22 @@ export const formatDate = (date: Date) => {
 
 export function formatServerDate(dateString: string): string {
     const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = { month: '2-digit', day: '2-digit', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  }
+    const options: Intl.DateTimeFormatOptions = {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+}
+
+export function formatDateDDMM(dateString: Date): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        month: "2-digit",
+        day: "2-digit"
+    };
+    return date.toLocaleDateString("en-US", options);
+}
 
 export const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {

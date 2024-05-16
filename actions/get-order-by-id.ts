@@ -14,6 +14,6 @@ export const getOrderById = async (id: string) => {
         return order;
     } catch (error) {
         console.error(error);
-        return [];
+        return null;
     }
 };
