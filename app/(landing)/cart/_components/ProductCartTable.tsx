@@ -8,6 +8,7 @@ import { formatPrice } from "@/ultils/formats";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import TotalPrice from "@/components/TotalPrice";
 
 const ProductCartTable = () => {
     const { cartItems, removeCartItem, updateQuantity } = useCart();
@@ -89,21 +90,7 @@ const ProductCartTable = () => {
                             </div>
                         </td>
                         <td className="py-8 text-right">
-                            {product.compareAtPrice !== null &&
-                            product.compareAtPrice > 0 ? (
-                                <div>
-                                    {formatPrice(
-                                        product.compareAtPrice *
-                                            product.quantity,
-                                    )}
-                                </div>
-                            ) : (
-                                <div>
-                                    {formatPrice(
-                                        product.price * product.quantity,
-                                    )}
-                                </div>
-                            )}
+                            <TotalPrice price={product.price} compareAtPrice={product.compareAtPrice} quantity={product.quantity} />
                         </td>
                     </tr>
                 ))}

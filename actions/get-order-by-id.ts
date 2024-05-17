@@ -8,7 +8,16 @@ export const getOrderById = async (id: string) => {
                 id
             },
             include: {
-                products: true,
+                shippingAddress: true,
+                products: {
+                    include: {
+                        product: {
+                            include: {
+                                images: true
+                            }
+                        }
+                    }
+                },
             }
         });
         return order;
